@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChatCore, { type Message } from "./ChatCore";
 import { IoIosSend } from "react-icons/io";
 import { FaCircle } from "react-icons/fa";
@@ -22,7 +22,7 @@ export default function App() {
     chat.getResponse([])
       .then(res => {
         setMessages([{
-          messageText: res.response.message.text,
+          text: res.response.message.text,
           source: "BOT",
           timestamp: res.response.message.timestamp,
         }])
@@ -30,18 +30,27 @@ export default function App() {
   }, [])
 
   const sendMessage = async () => {
+    setInput("");
+    setLoading(true);
     const newMessage: Message = {
-      messageText: input,
+      text: input,
       source: "USER",
       timestamp: new Date().toISOString(),
     }
     setMessages([...messages, newMessage]);
     const res = await chat.getResponse(messages);
-    setMessages([...messages, newMessage]);
-    setInput("");
+    const botMessage = res.response.message;
+    setMessages([...messages,
+      newMessage,
+    {
+      text: botMessage.text,
+      source: "BOT",
+      timestamp: botMessage.timestamp,
+    }]);
+    setLoading(false);
   }
 
-  const handleKeyDown = (e: any) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       sendMessage();
     }
@@ -63,10 +72,13 @@ export default function App() {
                     "p-4 rounded-md w-3/4",
                     message.source === "BOT" ? "text-left bg-gray-200" : "ml-auto text-right bg-blue-700 text-white"
                   )}>
-                    {message.messageText}
+                    {message.text}
                   </div>
                 </div>
-                <div className="text-gray-400 text-sm">
+                <div className={cx(
+                  "text-gray-400 text-sm",
+                  message.source === "BOT" ? "text-left" : "ml-auto text-right"
+                )}>
                   {message.timestamp}
                 </div>
               </div>
@@ -75,7 +87,7 @@ export default function App() {
         </div>
         {
           loading && (
-            <div className="flex gap-1 rounded-md bg-gray-100 p-2 text-[8px] text-gray-400">
+            <div className="w-fit flex gap-1 rounded-md bg-gray-100 p-2 text-[8px] text-gray-400">
               <FaCircle className="animate-bounce" style={{ animationDelay: "0ms" }} />
               <FaCircle className="animate-bounce" style={{ animationDelay: "300ms" }} />
               <FaCircle className="animate-bounce" style={{ animationDelay: "600ms" }} />

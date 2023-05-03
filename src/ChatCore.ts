@@ -12,13 +12,15 @@ export const ResponseSchema = z.object({
       timestamp: z.string(),
       id: z.string().optional(),
     }),
-    notes: z.object({
-      currentGoal: z.string().optional(),
-      currentStepIndices: z.array(z.number()).optional(),
-      queryResult: z.record(z.unknown()).optional(),
-      collectedData: z.record(z.unknown()).optional(),
-      goalFirstMsgIndex: z.number().optional(),
-    }),
+    notes: z
+      .object({
+        currentGoal: z.string().optional(),
+        currentStepIndices: z.array(z.number()).optional(),
+        queryResult: z.record(z.unknown()).optional(),
+        collectedData: z.record(z.unknown()).optional(),
+        goalFirstMsgIndex: z.number().optional(),
+      })
+      .optional(),
   }),
 });
 
@@ -29,7 +31,7 @@ export type APIReturnType = Promise<Response>;
 export interface Message {
   source: "USER" | "BOT" | "DEBUG";
   timestamp: number | string;
-  messageText: string;
+  text: string;
 }
 
 export type Environment = "DEV" | "PROD";
