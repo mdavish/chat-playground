@@ -1,5 +1,5 @@
 export interface Message {
-  type: "USER" | "BOT" | "DEBUG";
+  source: "USER" | "BOT" | "DEBUG";
   timestamp: number | string;
   messageText: string;
 }

@@ -9,21 +9,13 @@ const chat = new ChatCore({
   v: "20230101",
 });
 
-const testMessages: Message[] = [
-  {
-    type: "USER",
-    timestamp: "1682965896",
-    messageText: "Hello world",
-  },
-];
-
 export default function App() {
 
   const [res, setRes] = useState();
 
   const handleClick = async () => {
 
-    const res = await chat.getResponse(testMessages);
+    const res = await chat.getResponse([]);
     setRes(res);
   };
 
@@ -41,7 +33,7 @@ export default function App() {
             <h1 className="text-2xl font-bold">Raw Messages</h1>
             <SyntaxHighlighter
               language="json" >
-              {JSON.stringify(testMessages, null, 2)}
+              {JSON.stringify([], null, 2)}
             </SyntaxHighlighter>
             <h1 className="text-2xl font-bold">Response</h1>
             <SyntaxHighlighter
