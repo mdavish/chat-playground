@@ -1,3 +1,4 @@
+// Note: Can't get this to run in Node
 import ChatCore, { type Message } from "../ChatCore";
 
 async function main() {

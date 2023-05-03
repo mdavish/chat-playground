@@ -1,6 +1,6 @@
 export interface Message {
   type: "USER" | "BOT" | "DEBUG";
-  timestamp: number;
+  timestamp: number | string;
   messageText: string;
 }
 
@@ -33,7 +33,11 @@ export default class ChatCore {
     this.botId = botId;
     this.env = env ?? "DEV";
     this.v = v ?? "20230101";
-    this.chatUrl = this.baseUrls[this.env];
+    // Follow this structure:
+    // https://liveapi-dev.yext.com/v2/accounts/me/chat/red-dog-bot/message?v=20230101
+    this.chatUrl = `${this.baseUrls[this.env]}${this.botId}/message?v=${
+      this.v
+    }`;
   }
 
   async getResponse(messages: Message[]) {
@@ -44,9 +48,7 @@ export default class ChatCore {
         "api-key": this.apiKey,
       },
       body: JSON.stringify({
-        botId: this.botId,
-        messages,
-        v: this.v,
+        messages: messages,
       }),
     });
     console.log({ res });
