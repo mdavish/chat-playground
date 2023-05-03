@@ -1,3 +1,31 @@
+import { z } from "zod";
+
+export const ResponseSchema = z.object({
+  meta: z.object({
+    uuid: z.string(),
+    errors: z.array(z.string()),
+  }),
+  response: z.object({
+    message: z.object({
+      text: z.string(),
+      source: z.enum(["USER", "BOT", "DEBUG"]),
+      timestamp: z.string(),
+      id: z.string().optional(),
+    }),
+    notes: z.object({
+      currentGoal: z.string().optional(),
+      currentStepIndices: z.array(z.number()).optional(),
+      queryResult: z.record(z.unknown()).optional(),
+      collectedData: z.record(z.unknown()).optional(),
+      goalFirstMsgIndex: z.number().optional(),
+    }),
+  }),
+});
+
+export type Response = z.infer<typeof ResponseSchema>;
+
+export type APIReturnType = Promise<Response>;
+
 export interface Message {
   source: "USER" | "BOT" | "DEBUG";
   timestamp: number | string;
@@ -41,6 +69,8 @@ export default class ChatCore {
   }
 
   async getResponse(messages: Message[]) {
+    console.log("Request JSON:");
+    console.log({ messages });
     const res = await fetch(this.chatUrl, {
       method: "POST",
       headers: {
@@ -51,7 +81,10 @@ export default class ChatCore {
         messages: messages,
       }),
     });
-    console.log({ res });
-    return res.json();
+    const json = await res.json();
+    console.log("Response JSON:");
+    console.log({ json });
+    const parsed = ResponseSchema.parse(json);
+    return parsed;
   }
 }
