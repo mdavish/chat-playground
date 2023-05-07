@@ -33,78 +33,78 @@ const formatUglyServerTimestamp = (timestamp: string) => {
 }
 
 // For UI Testing, so you don't have to type out a bunch of messages
-const defaultMessages: Message[] = [
-  {
-    text: "Hello, how can I help you?",
-    source: "BOT",
-    timestamp: "1627665600000",
-  },
-  {
-    text: "I need help with my account",
-    source: "USER",
-    timestamp: "1627665600000",
-  },
-  {
-    text: "Sure, what do you need help with?",
-    source: "BOT",
-    timestamp: "1627665600000",
-  },
-  {
-    text: "I need to change my password",
-    source: "USER",
-    timestamp: "1627665600000",
-  },
-  {
-    text: "Hello, how can I help you?",
-    source: "BOT",
-    timestamp: "1627665600000",
-  },
-  {
-    text: "I need help with my account",
-    source: "USER",
-    timestamp: "1627665600000",
-  },
-  {
-    text: "Sure, what do you need help with?",
-    source: "BOT",
-    timestamp: "1627665600000",
-  },
-  {
-    text: "I need to change my password",
-    source: "USER",
-    timestamp: "1627665600000",
-  },
-  {
-    text: "Hello, how can I help you?",
-    source: "BOT",
-    timestamp: "1627665600000",
-  },
-  {
-    text: "I need help with my account",
-    source: "USER",
-    timestamp: "1627665600000",
-  },
-  {
-    text: "Sure, what do you need help with?",
-    source: "BOT",
-    timestamp: "1627665600000",
-  },
-  {
-    text: "I need to change my password",
-    source: "USER",
-    timestamp: "1627665600000",
-  },
-  {
-    text: "Sure, what do you need help with?",
-    source: "BOT",
-    timestamp: "1627665600000",
-  },
-  {
-    text: "I need to change my password",
-    source: "USER",
-    timestamp: "1627665600000",
-  },
-]
+// const defaultMessages: Message[] = [
+//   {
+//     text: "Hello, how can I help you?",
+//     source: "BOT",
+//     timestamp: "1627665600000",
+//   },
+//   {
+//     text: "I need help with my account",
+//     source: "USER",
+//     timestamp: "1627665600000",
+//   },
+//   {
+//     text: "Sure, what do you need help with?",
+//     source: "BOT",
+//     timestamp: "1627665600000",
+//   },
+//   {
+//     text: "I need to change my password",
+//     source: "USER",
+//     timestamp: "1627665600000",
+//   },
+//   {
+//     text: "Hello, how can I help you?",
+//     source: "BOT",
+//     timestamp: "1627665600000",
+//   },
+//   {
+//     text: "I need help with my account",
+//     source: "USER",
+//     timestamp: "1627665600000",
+//   },
+//   {
+//     text: "Sure, what do you need help with?",
+//     source: "BOT",
+//     timestamp: "1627665600000",
+//   },
+//   {
+//     text: "I need to change my password",
+//     source: "USER",
+//     timestamp: "1627665600000",
+//   },
+//   {
+//     text: "Hello, how can I help you?",
+//     source: "BOT",
+//     timestamp: "1627665600000",
+//   },
+//   {
+//     text: "I need help with my account",
+//     source: "USER",
+//     timestamp: "1627665600000",
+//   },
+//   {
+//     text: "Sure, what do you need help with?",
+//     source: "BOT",
+//     timestamp: "1627665600000",
+//   },
+//   {
+//     text: "I need to change my password",
+//     source: "USER",
+//     timestamp: "1627665600000",
+//   },
+//   {
+//     text: "Sure, what do you need help with?",
+//     source: "BOT",
+//     timestamp: "1627665600000",
+//   },
+//   {
+//     text: "I need to change my password",
+//     source: "USER",
+//     timestamp: "1627665600000",
+//   },
+// ]
 
 export default function App() {
 

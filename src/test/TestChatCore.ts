@@ -11,9 +11,9 @@ async function main() {
 
   const testMessages: Message[] = [
     {
-      type: "USER",
-      timestamp: Date.now(),
-      messageText: "Hello",
+      source: "USER",
+      timestamp: "1619712000000",
+      text: "Hello",
     },
   ];
 

@@ -30,7 +30,7 @@ export type APIReturnType = Promise<Response>;
 
 export interface Message {
   source: "USER" | "BOT" | "DEBUG";
-  timestamp: string; // E.g.
+  timestamp: string; // Strings of integers, it's confusing!
   text: string;
 }
 
