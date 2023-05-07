@@ -6,7 +6,7 @@
       }
     ]
   },
-  "base_image_tag": "node-12.18",
+  "base_image_tag": "node-18.13",
   "dependencies": {
     "installDepsCmd": "echo install",
     "requiredFiles": []
