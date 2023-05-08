@@ -14,14 +14,26 @@
       ],
       "instructions": [
         {
-          "restApi": {
-            "url": "https://api.openweathermap.org/data/3.0/onecall?lat=40.65&lon=-73.95&appid=1ccf45d1a1c47111ace6f290a4ee2685",
-            "method": "GET"
+          "collect": {
+            "instruction": "Ask the user what city they're interested in",
+            "fields": [
+              {
+                "fieldType": "STRING",
+                "id": "city",
+                "optional": false
+              }
+            ]
+          }
+        },
+        {
+          "function": {
+            "functionName": "getWeather",
+            "pluginId": "davish-playground"
           }
         },
         {
           "reply": {
-            "instruction": "Tell the user what the weather is like in Brooklyn right now. Tell them the temperature in Fahrenheit, and whether it's cloudy, sunny, rainy, etc.",
+            "instruction": "Based on the response, tell them the weather in that city.",
             "mode": "DIRECT_ANSWER"
           }
         }
