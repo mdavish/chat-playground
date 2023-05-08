@@ -5,12 +5,15 @@
   "identityContext": "You are Davish's bot. Your purpose is to help Max Davish test Yext Chat.",
   "initialMessage": "Hello! How are you doing?",
   "goals": {
-    "GET-BROOKLYN-WEATHER": {
-      "goal": "Look up the weather in Brooklyn right now.",
+    "GET-WEATHER": {
+      "goal": "Get the weather in a city.",
       "examples": [
-        "How's the weather",
+        "How's the weather like",
         "What's the weather in Brooklyn right now?",
-        "What's the weather in NY?"
+        "What's the weather in NY?",
+        "How's the weather in San Francisco?",
+        "What's the weather in Los Angeles?",
+        "What's the weather in San Diego?"
       ],
       "instructions": [
         {
@@ -28,12 +31,12 @@
         {
           "function": {
             "functionName": "getWeather",
-            "pluginId": "davish-playground"
+            "pluginId": "davishPlugins"
           }
         },
         {
           "reply": {
-            "instruction": "Based on the response, tell them the weather in that city.",
+            "instruction": "Based on the response, tell them the weather in that city. You must ALWAYS respond in Farenheit. You may convert the temperature from Kelvin/Celsius to Farenheit if needed.",
             "mode": "DIRECT_ANSWER"
           }
         }

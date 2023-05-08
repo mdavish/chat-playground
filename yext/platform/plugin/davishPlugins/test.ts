@@ -27,7 +27,7 @@ Deno.test("Respond to a chat message with the weather", async () => {
   const fakePayload: ChatFunctionPayload = {
     messages: [],
     notes: {
-      collectedData: {
+      collected_data: {
         city: "Brooklyn",
       },
     },

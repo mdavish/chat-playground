@@ -10,12 +10,12 @@ const ChatFunctionPayloadSchema = z.object({
   ),
   notes: z
     .object({
-      currentGoal: z.string().optional(),
-      currentStepIndices: z.array(z.number()).optional(),
-      searchQuery: z.string().optional(),
-      queryResult: z.any(),
-      collectedData: z.record(z.string()).optional(),
-      goalFirstMsgIndex: z.number().optional(),
+      current_goal: z.string().optional(),
+      current_step_indices: z.array(z.number()).optional(),
+      search_query: z.string().optional(),
+      query_result: z.any(),
+      collected_data: z.record(z.string()).optional(),
+      goal_first_msg_index: z.number().optional(),
     })
     .optional(),
 });
@@ -56,7 +56,7 @@ export const geocodeCity = async (city: string) => {
 // Note: In the future this can be a simple REST API instruction
 // But right now we don't support dynamic URLs based on collected data
 export const getWeather: ChatFunction = async ({ notes }) => {
-  const parsedCity = z.string().safeParse(notes?.collectedData?.city);
+  const parsedCity = z.string().safeParse(notes?.collected_data?.city);
   if (!parsedCity.success) {
     throw new Error(
       "No city was collected. Make sure to add a `city` field first."
@@ -67,6 +67,6 @@ export const getWeather: ChatFunction = async ({ notes }) => {
   // The geocode response actually contains the weather data
   // So no need to make a follow up request
   return {
-    queryResult: data,
+    query_result: data,
   };
 };
