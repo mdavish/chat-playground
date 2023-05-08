@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "./components/ui/select"
 import { motion } from "framer-motion";
-import cx from "classnames";
+import MessageBuble from "./components/MessageBubble";
 
 interface BotConfig {
   label: string;
@@ -27,10 +27,6 @@ const configOptions: BotConfig[] = [
     label: "Davish Playground",
   }
 ]
-
-const formatUglyServerTimestamp = (timestamp: string) => {
-  return new Date(parseInt(timestamp)).toLocaleString();
-}
 
 // For UI Testing, so you don't have to type out a bunch of messages
 // const defaultMessages: Message[] = [
@@ -187,7 +183,7 @@ export default function App() {
   return (
     <div className="h-screen w-screen flex flex-row">
       <div className="h-full mx-auto my-auto w-full flex flex-col relative">
-        <div className="w-full p-4 absolutef top-0 bg-white/50 backdrop-blur-2xl flex flex-row">
+        <div className="w-full p-4 absolute top-0 bg-white/25 backdrop-blur-lg flex flex-row">
           <div className="mx-auto">
             <Select
               defaultValue={configOptions[0].botId}>
@@ -214,30 +210,11 @@ export default function App() {
           <div className="mx-auto max-w-5xl mt-auto w-full flex flex-col gap-y-2 py-2 mb-28 px-4">
             {
               messages.map((message, index) => (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.4 }}
+                <MessageBuble
                   key={index}
-                  className={cx(
-                    "flex flex-col gap-y-2 w-full",
-                  )}
-                >
-                  <div className="flex flex-row gap-x-2">
-                    <div className={cx(
-                      "p-4 rounded-md w-fit max-w-2xl",
-                      message.source === "BOT" ? "text-left bg-gray-200" : "ml-auto text-right bg-blue-700 text-white"
-                    )}>
-                      {message.text}
-                    </div>
-                  </div>
-                  <div className={cx(
-                    "text-gray-400 text-sm",
-                    message.source === "BOT" ? "text-left" : "ml-auto text-right"
-                  )}>
-                    {formatUglyServerTimestamp(message.timestamp)}
-                  </div>
-                </motion.div>
+                  index={index}
+                  message={message}
+                />
               ))
             }
             {
@@ -271,7 +248,7 @@ export default function App() {
             <div ref={bottomDivRef} />
           </div>
         </div>
-        <div className="flex flex-row absolute w-full bottom-0 bg-white/50 backdrop-blur-2xl border-t border-white py-4">
+        <div className="flex flex-row absolute w-full bottom-0 bg-white/25 backdrop-blur-lg border-t border-white py-4">
           <div className="w-full max-w-5xl flex flex-row mx-auto gap-x-2 relative px-4">
             <input
               autoFocus
