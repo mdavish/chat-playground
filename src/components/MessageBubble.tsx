@@ -5,15 +5,14 @@ import cx from "classnames";
 
 const formatUglyServerTimestamp = (timestamp: string) => {
   // Desired Format
-  // 5/7/23 8:27 pm
+  // May 7, 8:27 pm
   return new Date(parseInt(timestamp)).toLocaleString("en-US", {
-    month: "numeric",
+    month: "short",
     day: "numeric",
-    year: "2-digit",
     hour: "numeric",
     minute: "numeric",
-    hour12: true,
-  })
+    hour12: true
+  });
 }
 
 export default function MessageBuble({ message, index }: { message: Message, index: number }) {
@@ -37,7 +36,7 @@ export default function MessageBuble({ message, index }: { message: Message, ind
           onMouseLeave={() => setShowTimestamp(false)}
           className={cx(
             "p-4 rounded-md w-fit max-w-2xl",
-            message.source === "BOT" ? "text-left bg-gray-200" : "text-right bg-blue-700 text-white"
+            message.source === "BOT" ? "text-left bg-gray-100 text-gray-900" : "text-right bg-blue-700 text-white"
           )}>
           {message.text}
         </div>

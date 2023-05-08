@@ -11,6 +11,15 @@ import {
 } from "./components/ui/select"
 import { motion } from "framer-motion";
 import MessageBuble from "./components/MessageBubble";
+import { Toggle } from "./components/ui/toggle";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./components/ui/tooltip";
+import { DevicePhoneMobileIcon, ArrowPathIcon } from "@heroicons/react/24/solid";
+import { cn } from "./lib/utils";
 
 interface BotConfig {
   label: string;
@@ -108,6 +117,7 @@ export default function App() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<boolean>(false);
+  const [mobileMode, setMobileMode] = useState<boolean>(false);
 
   const [selectedConfigId, setSelectedConfigId] = useState<string>(configOptions[0].botId);
 
@@ -181,13 +191,18 @@ export default function App() {
   }
 
   return (
-    <div className="h-screen w-screen flex flex-row">
-      <div className="h-full mx-auto my-auto w-full flex flex-col relative">
-        <div className="w-full p-4 absolute top-0 bg-white/25 backdrop-blur-lg flex flex-row">
-          <div className="mx-auto">
+    <div className="h-screen w-screen flex flex-row bg-gray-200">
+      <motion.div
+        // Animate the size of the chat window when the mobile mode changes
+        className={cn(
+          "h-full w-full flex flex-col relative bg-white transition-all duration-500 mx-auto my-auto",
+          mobileMode ? " rounded-2xl overflow-hidden shadow-2xl w-[45vh] h-[80vh]" : "rounded-none"
+        )}>
+        <div className="w-full p-4 absolute top-0 bg-white/25 backdrop-blur-lg flex flex-row gap-x-4">
+          <div className="mx-auto flex flex-row gap-x-4">
             <Select
               defaultValue={configOptions[0].botId}>
-              <SelectTrigger className="w-[180px] clas">
+              <SelectTrigger className="w-[180px] bg-white">
                 <SelectValue placeholder="Bot Config" />
               </SelectTrigger>
               <SelectContent>
@@ -204,10 +219,48 @@ export default function App() {
                 }
               </SelectContent>
             </Select>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Toggle
+                    className="hover: cursor-pointer"
+                    pressed={mobileMode}
+                    defaultPressed={false}
+                    onClick={
+                      () => setMobileMode(!mobileMode)
+                    }>
+                    <DevicePhoneMobileIcon className="text-base text-gray-800 h-4 w-4" />
+                  </Toggle>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Mobile Preview</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => {
+                      setMessages([]);
+                      setError(false);
+                    }}
+                    animate={error ? { rotate: 360 } : {}}
+                  >
+                    <ArrowPathIcon className="text-base text-gray-800 h-4 w-4" />
+                  </motion.button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Refresh</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
         <div className="w-full h-full flex flex-col overflow-auto">
-          <div className="mx-auto max-w-5xl mt-auto w-full flex flex-col gap-y-2 py-2 mb-28 px-4">
+          <div className="mx-auto max-w-5xl mt-auto w-full flex flex-col gap-y-6 py-2 mb-28 px-4">
             {
               messages.map((message, index) => (
                 <MessageBuble
@@ -222,7 +275,7 @@ export default function App() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 1, duration: 0.5 }}
+                  transition={{ delay: 0.7, duration: 0.5 }}
                   className="w-fit flex gap-1 rounded-md bg-gray-100 p-2 text-[8px] text-gray-400">
                   <FaCircle className="animate-bounce" style={{ animationDelay: "0ms" }} />
                   <FaCircle className="animate-bounce" style={{ animationDelay: "300ms" }} />
@@ -256,18 +309,18 @@ export default function App() {
               onKeyDown={handleKeyDown}
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className="border-2 border-gray-300 p-4 rounded-md w-full disabled:bg-gray-100"
+              className="border-2 border-gray-300 p-4 rounded-md w-full disabled:bg-gray-50"
               placeholder="Type a message..."
             />
             <button
               disabled={loading}
               onClick={sendMessage}
-              className="rounded-full mx-auto text-white bg-blue-600 p-1.5 hover:bg-blue-800 disabled:bg-gray-200 text-xl absolute right-7 top-3 my-auto">
+              className="rounded-full mx-auto text-white bg-blue-600 p-1.5 hover:bg-blue-800 disabled:bg-gray-100 text-xl absolute right-7 top-3 my-auto">
               <IoIosSend />
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }
