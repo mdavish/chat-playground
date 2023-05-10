@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
-import ChatCore, { type Message } from "./ChatCore";
+import { ChatCore, MessageSource } from "@yext/chat-core"
+import type { Message } from "@yext/chat-core"
 import { IoIosSend } from "react-icons/io";
 import { FaCircle, FaExclamationTriangle } from "react-icons/fa";
 import {
@@ -30,10 +31,16 @@ interface BotConfig {
 
 const configOptions: BotConfig[] = [
   {
+    apiKey: "1c06cff8f4e50d80fefd989fe50dedc5",
+    botId: "davish-playground",
+    env: "PROD",
+    label: "Davish Playground",
+  },
+  {
     apiKey: "5a9eab1d26efd08005b6c1c309e1d981",
     botId: "davish-playground",
     env: "DEV",
-    label: "Davish Playground",
+    label: "Davish Devground",
   }
 ]
 
@@ -118,19 +125,34 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<boolean>(false);
   const [mobileMode, setMobileMode] = useState<boolean>(false);
+  // Labels are unique, bot IDs aren't
+  const [selectedConfigLabel, setSelectedConfigLabel] = useState<string>(configOptions[0].label);
+  const selectedConfig = configOptions.find(config => config.label === selectedConfigLabel) ?? configOptions[0];
 
-  const [selectedConfigId, setSelectedConfigId] = useState<string>(configOptions[0].botId);
+  // Save mobile mode to local storage
+  useEffect(() => {
+    localStorage.setItem("mobileMode", mobileMode ? "true" : "false");
+  }, [mobileMode])
 
-  const selectedConfig = configOptions.find(config => config.botId === selectedConfigId) ?? configOptions[0];
+  // Load mobile mode from local storage
+  useEffect(() => {
+    const mobileMode = localStorage.getItem("mobileMode");
+    if (mobileMode) {
+      setMobileMode(mobileMode === "true");
+    }
+  }, [])
+
+  // Whenever the selected config changes, reset the chat
+  useEffect(() => {
+    setMessages([]);
+  }, [selectedConfig])
 
   const chat = useMemo(() => {
     return new ChatCore({
       apiKey: selectedConfig.apiKey,
       botId: selectedConfig.botId,
-      env: selectedConfig?.env,
-      v: "20230101",
     });
-  }, [selectedConfig.apiKey, selectedConfig.botId, selectedConfig.env])
+  }, [selectedConfig.apiKey, selectedConfig.botId])
 
   const bottomDivRef = useRef<HTMLDivElement>(null);
 
@@ -143,12 +165,12 @@ export default function App() {
 
   useEffect(() => {
     if (messages.length === 0) {
-      chat.getResponse([])
+      chat.getNextMessage({ messages: [] })
         .then(res => {
           setMessages([{
-            text: res.response.message.text,
-            source: "BOT",
-            timestamp: res.response.message.timestamp,
+            text: res.message.text,
+            source: MessageSource.BOT,
+            timestamp: res.message.timestamp,
           }])
         })
     }
@@ -159,26 +181,26 @@ export default function App() {
     setLoading(true);
     const newMessage: Message = {
       text: input,
-      source: "USER",
+      source: MessageSource.USER,
       // Parse the date to an integer and then back to a string,
       // Because that's how the server wants it
-      timestamp: new Date().getTime().toString(),
+      timestamp: new Date().getTime(),
     }
     setMessages([...messages, newMessage]);
     let res;
     try {
-      res = await chat.getResponse([...messages, newMessage]);
+      res = await chat.getNextMessage({ messages: [...messages, newMessage] });
     } catch (e) {
       setError(true);
       setLoading(false);
       return;
     }
-    const botMessage = res.response.message;
+    const botMessage = res.message;
     setMessages([...messages,
       newMessage,
     {
       text: botMessage.text,
-      source: "BOT",
+      source: MessageSource.BOT,
       timestamp: botMessage.timestamp,
     }]);
     setLoading(false);
@@ -196,12 +218,16 @@ export default function App() {
         // Animate the size of the chat window when the mobile mode changes
         className={cn(
           "h-full w-full flex flex-col relative bg-white transition-all duration-500 mx-auto my-auto",
-          mobileMode ? " rounded-2xl overflow-hidden shadow-2xl w-[45vh] h-[80vh]" : "rounded-none"
+          mobileMode ? " rounded-3xl overflow-hidden shadow-2xl w-[45vh] h-[80vh]" : "rounded-none"
         )}>
-        <div className="w-full p-4 absolute top-0 bg-white/25 backdrop-blur-lg flex flex-row gap-x-4">
+        <div className="w-full p-4 absolute top-0 z-30 bg-white/25 backdrop-blur-lg flex flex-row gap-x-4">
           <div className="mx-auto flex flex-row gap-x-4">
             <Select
-              defaultValue={configOptions[0].botId}>
+              value={selectedConfigLabel}
+              onValueChange={(value) => {
+                setSelectedConfigLabel(value)
+              }}
+            >
               <SelectTrigger className="w-[180px] bg-white">
                 <SelectValue placeholder="Bot Config" />
               </SelectTrigger>
@@ -210,8 +236,8 @@ export default function App() {
                   configOptions.map((config, index) => (
                     <SelectItem
                       key={index}
-                      value={config.botId}
-                      onClick={() => setSelectedConfigId(config.botId)}
+                      value={config.label}
+                      onClick={() => setSelectedConfigLabel(config.botId)}
                     >
                       {config.label}
                     </SelectItem>
@@ -276,7 +302,7 @@ export default function App() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.7, duration: 0.5 }}
-                  className="w-fit flex gap-1 rounded-md bg-gray-100 p-2 text-[8px] text-gray-400">
+                  className="w-fit flex gap-1 rounded-md p-2 text-[8px] text-gray-500">
                   <FaCircle className="animate-bounce" style={{ animationDelay: "0ms" }} />
                   <FaCircle className="animate-bounce" style={{ animationDelay: "300ms" }} />
                   <FaCircle className="animate-bounce" style={{ animationDelay: "600ms" }} />
@@ -309,7 +335,7 @@ export default function App() {
               onKeyDown={handleKeyDown}
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className="border-2 border-gray-300 p-4 rounded-md w-full disabled:bg-gray-50"
+              className="border border-gray-300 p-4 w-full disabled:bg-gray-50 rounded-3xl"
               placeholder="Type a message..."
             />
             <button

@@ -15,6 +15,8 @@
     "@radix-ui/react-tabs": "^1.0.3",
     "@radix-ui/react-toggle": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.5",
+    "@vitejs/plugin-react": "^4.0.0",
+    "@yext/chat-core": "file:../chat-core/yext-chat-core-0.1.0.tgz",
     "class-variance-authority": "^0.6.0",
     "classnames": "^2.3.2",
     "clsx": "^1.2.1",
