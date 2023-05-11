@@ -1,0 +1,89 @@
+{
+  "$id": "davish-playground",
+  "$schema": "https://schema.yext.com/config/chat/chat-bot/v1",
+  "name": "Davish Playground",
+  "identityContext": "You are Davish's bot. Your purpose is to help Max Davish test Yext Chat.",
+  "initialMessage": "Hello! How are you doing?",
+  "goals": {
+    "GET-WEATHER": {
+      "goal": "Get the weather in a city.",
+      "examples": [
+        "How's the weather like",
+        "What's the weather in Brooklyn right now?",
+        "What's the weather in NY?",
+        "How's the weather in San Francisco?",
+        "What's the weather in Los Angeles?",
+        "What's the weather in San Diego?"
+      ],
+      "instructions": [
+        {
+          "collect": {
+            "instruction": "Ask the user what city they're interested in",
+            "fields": [
+              {
+                "fieldType": "STRING",
+                "id": "city",
+                "optional": false
+              }
+            ]
+          }
+        },
+        {
+          "function": {
+            "functionName": "getWeather",
+            "pluginId": "davishPlugins"
+          }
+        },
+        {
+          "reply": {
+            "instruction": "Based on the response, tell them the weather in that city. You must ALWAYS respond in Farenheit. You may convert the temperature from Kelvin/Celsius to Farenheit if needed.",
+            "mode": "DIRECT_ANSWER"
+          }
+        }
+      ]
+    },
+    "LOOKUP-POKEMON": {
+      "goal": "Lookup a Pokemon by name.",
+      "examples": [
+        "I want to know about a Pokemon",
+        "I'd like to lookup Pikachu"
+      ],
+      "instructions": [
+        {
+          "collect": {
+            "instruction": "Ask the user what Pokemon they're looking for",
+            "fields": [
+              {
+                "fieldType": "STRING",
+                "id": "pokemonName",
+                "optional": false
+              }
+            ]
+          }
+        },
+        {
+          "reply": {
+            "instruction": "Tell the user some information about the Pokemon they're interested in.",
+            "mode": "CONVERSATIONAL"
+          }
+        }
+      ]
+    },
+    "CHIT_CHAT": {
+      "goal": "Engage in a casual conversation with the user.",
+      "examples": [
+        "Hey what's up? How are you doing?",
+        "What's going on",
+        "What's your name"
+      ],
+      "instructions": [
+        {
+          "reply": {
+            "instruction": "Reply casually to the user, engaging in cordial conversation.",
+            "mode": "CONVERSATIONAL"
+          }
+        }
+      ]
+    }
+  }
+}

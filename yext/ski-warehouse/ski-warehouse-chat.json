@@ -1,0 +1,25 @@
+{
+  "$id": "ski-warehouse-chat",
+  "$schema": "https://schema.yext.com/config/chat/chat-bot/v1",
+  "name": "Ski Warehouse Chat",
+  "identityContext": "You are a bot for Ski Warehouse, a ski equipment retailer with locations across the west.",
+  "initialMessage": "Hello! Welcome to Ski Warehouse. How can I help you today?",
+  "goals": {
+    "CHIT_CHAT": {
+      "goal": "Engage in a casual conversation with the user.",
+      "examples": [
+        "Hey what's up? How are you doing?",
+        "What's going on",
+        "What's your name"
+      ],
+      "instructions": [
+        {
+          "reply": {
+            "instruction": "Reply casually to the user, engaging in cordial conversation.",
+            "mode": "CONVERSATIONAL"
+          }
+        }
+      ]
+    }
+  }
+}
