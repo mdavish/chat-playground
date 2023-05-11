@@ -16,6 +16,11 @@ export default function ChatPanel() {
   const [input, setInput] = useState("");
   const [error, setError] = useState<boolean>(false);
 
+  // Fetch the first message when the component is mounted
+  useEffect(() => {
+    chat.getNextMessage();
+  }, [chat])
+
 
   const sendMessage = async () => {
     setInput("");
@@ -43,7 +48,6 @@ export default function ChatPanel() {
       bottomDivRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages])
-
 
   return (
     <>

@@ -5,6 +5,100 @@
   "identityContext": "You are a bot for Ski Warehouse, a ski equipment retailer with locations across the west.",
   "initialMessage": "Hello! Welcome to Ski Warehouse. How can I help you today?",
   "goals": {
+    "RECOMMEND-SKIS": {
+      "goal": "Help the user find a pair of skis they'll like.",
+      "examples": [
+        "I'm looking for a new pair of skis.",
+        "I'm looking for a new pair of skis for my son.",
+        "I'd like to buy a new pair of skis.",
+        "Can you recommend a pair of skis for me?"
+      ],
+      "instructions": [
+        {
+          "collect": {
+            "instruction": "Ask the user their gender and level of experience.",
+            "fields": [
+              {
+                "id": "gender",
+                "fieldType": "ENUM",
+                "name": "Gender",
+                "description": "The user's gender",
+                "required": true,
+                "enumValues": [
+                  {
+                    "value": "MALE",
+                    "description": "Male"
+                  },
+                  {
+                    "value": "FEMALE",
+                    "description": "Female"
+                  }
+                ]
+              },
+              {
+                "id": "experience",
+                "name": "Experience",
+                "fieldType": "ENUM",
+                "description": "The user's level of experience.",
+                "required": true,
+                "enumValues": [
+                  {
+                    "value": "BEGINNER",
+                    "description": "Beginner"
+                  },
+                  {
+                    "value": "INTERMEDIATE",
+                    "description": "Intermediate"
+                  },
+                  {
+                    "value": "ADVANCED",
+                    "description": "Advanced"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "restApi": {
+            "url": "https://liveapi.yext.com/v2/accounts/me/search/vertical/query?experienceKey=yext-ski-warehouse&api_key=61836bbb8fa572b8c9306eedfa4a2d2e&v=20220511&locale=en&input=&verticalKey=products&filters={\"$and\":[{\"dm_directoryParents.name\":{\"$eq\":\"Men\"}},{\"dm_directoryParents.name\":{\"$eq\":\"Skis\"}},{\"dm_directoryParents.name\":{\"$eq\":\"Ski\"}}]}&offset=0&retrieveFacets=true&facetFilters={\"c_rockerType\":[],\"c_brand\":[],\"c_abilityLevel.name\":[{\"c_abilityLevel.name\":{\"$eq\":\"Advanced-Expert\"}}],\"c_price\":[],\"c_genderName\":[],\"c_terrain.name\":[{\"c_terrain.name\":{\"$eq\":\"All-Mountain\"}}],\"c_turningRadius\":[]}&skipSpellCheck=false&sessionTrackingEnabled=false&sortBys=[]&source=STANDARD",
+            "method": "GET"
+          }
+        },
+        {
+          "reply": {
+            "instruction": "Reply to the user sharing some options for skis that match their criteria. Give them at least 3 options in a markdown table.",
+            "mode": "DIRECT_ANSWER"
+          }
+        }
+      ]
+    },
+    "LOCATION-QUESTION": {
+      "goal": "Answer questions about a Ski Warehouse retail location.",
+      "examples": [
+        "How late are you open today?",
+        "What are your locations?",
+        "Do you have locations in Telluride?",
+        "When is your El Prado location closed until?"
+      ],
+      "instructions": [
+        {
+          "search": {
+            "instruction": "Search the Yext Knowledge Graph for information relevant to the user's question.",
+            "experienceKey": "yext-ski-warehouse",
+            "includedVerticals": [
+              "locations"
+            ]
+          }
+        },
+        {
+          "reply": {
+            "instruction": "Answer the user's question using the information you found.",
+            "mode": "DIRECT_ANSWER"
+          }
+        }
+      ]
+    },
     "CHIT_CHAT": {
       "goal": "Engage in a casual conversation with the user.",
       "examples": [

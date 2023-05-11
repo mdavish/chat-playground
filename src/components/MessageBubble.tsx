@@ -3,8 +3,16 @@ import type { Message } from "@yext/chat-core";
 import { motion } from "framer-motion";
 import cx from "classnames";
 import { HandThumbUpIcon, HandThumbDownIcon } from "@heroicons/react/20/solid";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
-const formatUglyServerTimestamp = (timestamp: number) => {
+const formatUglyServerTimestamp = (timestamp: number | string) => {
+
+  // If it's a string, convert it to a number
+  if (typeof timestamp === "string") {
+    timestamp = parseInt(timestamp);
+  }
+
   // Desired Format
   // May 7, 8:27 pm
   return new Date(timestamp).toLocaleString("en-US", {
@@ -48,7 +56,7 @@ export default function MessageBuble({ message, index }: { message: Message, ind
           onMouseLeave={() => setShowTimestamp(false)}
           className={cx(
             "p-4 rounded-2xl w-fit max-w-lg relative",
-            message.source === "BOT" ? "text-left bg-gray-100 text-gray-900" : "text-right bg-blue-700 text-white relative"
+            message.source === "BOT" ? "text-left bg-gray-100" : "text-right bg-blue-700 relative"
           )}>
           <motion.div
             initial={{ opacity: 0 }}
@@ -72,7 +80,11 @@ export default function MessageBuble({ message, index }: { message: Message, ind
               <HandThumbDownIcon className="w-4 h-4 p-1" />
             </button>
           </motion.div>
-          {messageText}
+          <ReactMarkdown
+            className={cx("prose", message.source === "BOT" ? "text-gray-900" : "text-white")}
+            remarkPlugins={[remarkGfm]}>
+            {messageText}
+          </ReactMarkdown>
           {explanation && (
             <div className="text-xs text-gray-600 mt-2 pt-2 border-t border-gray-300">
               {explanation}

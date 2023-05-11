@@ -34,6 +34,12 @@ const configOptions: BotConfig[] = [
     label: "Davish Playground",
   },
   {
+    apiKey: "ba41c60c65d874c5340985ad4fcda69a",
+    botId: "ski-warehouse-chat",
+    env: "PROD",
+    label: "Ski Warehouse",
+  },
+  {
     apiKey: "5a9eab1d26efd08005b6c1c309e1d981",
     botId: "davish-playground",
     env: "DEV",
