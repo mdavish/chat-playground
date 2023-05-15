@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { IoIosSend } from "react-icons/io";
 import { useChatState, useChatActions } from "@yext/chat-headless-react"
 import MessageBuble from "./MessageBubble"
-import { FaCircle, FaExclamationTriangle } from "react-icons/fa";
+import { FaCircle, FaExclamationTriangle, FaArrowUp } from "react-icons/fa";
 import { motion } from "framer-motion"
 
 export default function ChatPanel() {
@@ -104,12 +104,15 @@ export default function ChatPanel() {
             className="border border-gray-300 p-4 w-full disabled:bg-gray-50 rounded-3xl"
             placeholder="Type a message..."
           />
-          <button
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            initial={{ opacity: input.length > 0 ? 1 : 0 }}
+            animate={{ opacity: input.length > 0 ? 1 : 0 }}
             disabled={loading}
             onClick={sendMessage}
             className="rounded-full mx-auto text-white bg-blue-600 p-1.5 hover:bg-blue-800 disabled:bg-gray-100 text-xl absolute right-7 top-3 my-auto">
-            <IoIosSend />
-          </button>
+            <FaArrowUp />
+          </motion.button>
         </div>
       </div>
     </>

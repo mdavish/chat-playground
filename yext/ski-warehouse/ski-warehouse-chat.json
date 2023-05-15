@@ -99,6 +99,32 @@
         }
       ]
     },
+    "PRODUCT-QUESTION": {
+      "goal": "Answer questions about ski products.",
+      "examples": [
+        "Tell me about the nordica enforcer 100s?",
+        "What is the Volkl M6 Mantra made of?",
+        "Are the Salomon SPro boots made in the USA?",
+        "What women's boots do you have?"
+      ],
+      "instructions": [
+        {
+          "search": {
+            "instruction": "Search the Yext Knowledge Graph for information relevant to the user's question.",
+            "experienceKey": "yext-ski-warehouse",
+            "includedVerticals": [
+              "products"
+            ]
+          }
+        },
+        {
+          "reply": {
+            "instruction": "Answer the user's question using the information you found.",
+            "mode": "DIRECT_ANSWER"
+          }
+        }
+      ]
+    },
     "CHIT_CHAT": {
       "goal": "Engage in a casual conversation with the user.",
       "examples": [
