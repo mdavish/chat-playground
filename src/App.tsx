@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Select,
   SelectContent,
@@ -18,6 +18,7 @@ import { motion } from "framer-motion"
 import { ChatHeadlessProvider } from "@yext/chat-headless-react";
 import ChatPanel from "./components/ChatPanel";
 import { cn } from "./lib/utils";
+import { useSearchParams } from "react-router-dom";
 
 interface BotConfig {
   label: string;
@@ -40,6 +41,12 @@ const configOptions: BotConfig[] = [
     label: "Ski Warehouse",
   },
   {
+    apiKey: "5db47bd2b4c1f5776606691c7da348b2",
+    botId: "hitchhikers-chat",
+    env: "PROD",
+    label: "Hitchhikers",
+  },
+  {
     apiKey: "5a9eab1d26efd08005b6c1c309e1d981",
     botId: "davish-playground",
     env: "DEV",
@@ -54,6 +61,24 @@ export default function App() {
   // Labels are unique, bot IDs aren't
   const [selectedConfigLabel, setSelectedConfigLabel] = useState<string>(configOptions[0].label);
   const selectedConfig = configOptions.find(config => config.label === selectedConfigLabel) ?? configOptions[0];
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Update the URL with the selected bot config
+  if (searchParams.get("bot") !== selectedConfig.botId) {
+    setSearchParams({ bot: selectedConfig.botId });
+  }
+
+  // Read the URL to determine the selected bot config
+  useEffect(() => {
+    const botId = searchParams.get("bot");
+    if (botId) {
+      const config = configOptions.find(config => config.botId === botId);
+      if (config) {
+        setSelectedConfigLabel(config.label);
+      }
+    }
+  }, [searchParams]);
 
   return (
     <div className="h-screen w-screen flex flex-row bg-gray-200">

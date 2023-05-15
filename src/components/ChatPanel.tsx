@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import { IoIosSend } from "react-icons/io";
 import { useChatState, useChatActions } from "@yext/chat-headless-react"
 import MessageBuble from "./MessageBubble"
 import { FaCircle, FaExclamationTriangle, FaArrowUp } from "react-icons/fa";
