@@ -81,7 +81,7 @@ export default function MessageBuble({ message, index }: { message: Message, ind
             </button>
           </motion.div>
           <ReactMarkdown
-            className={cx("prose", message.source === "BOT" ? "text-gray-900" : "text-white")}
+            className={cx("prose overflow-x-auto", message.source === "BOT" ? "text-gray-900" : "text-white")}
             remarkPlugins={[remarkGfm]}>
             {messageText}
           </ReactMarkdown>
