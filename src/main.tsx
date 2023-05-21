@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import SearchResultsPage from './SearchResultsPage.tsx'
+import ComponentPlayground from './ComponentPlayground.tsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
@@ -13,7 +14,11 @@ const router = createBrowserRouter([
   {
     path: "/search-results-demo",
     element: <SearchResultsPage />,
-  }
+  },
+  {
+    path: "/component-playground",
+    element: <ComponentPlayground />,
+  },
 ])
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
