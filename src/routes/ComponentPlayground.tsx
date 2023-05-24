@@ -1,8 +1,8 @@
 import { useMemo } from "react"
 import { ChatHeadlessProvider, type ChatConfig } from "@yext/chat-headless-react"
-import ChatInput from "./components/ChatInput"
-import MessageBubble from "./components/MessageBubble"
-import ChatPanel from "./components/ChatPanel"
+import ChatInput from "../components/chat-ui/ChatInput"
+import MessageBubble from "../components/chat-ui/MessageBubble"
+import ChatPanel from "../components/chat-ui/ChatPanel"
 
 export default function ComponentPlayground() {
 

@@ -6,6 +6,14 @@ import { HandThumbUpIcon, HandThumbDownIcon } from "@heroicons/react/20/solid";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
+export interface MessageBubbleProps {
+  message: Message,
+  index?: number,
+  showThumbsUpDown?: boolean
+  showTimestamp?: boolean,
+  showExplanation?: boolean
+}
+
 const formatUglyServerTimestamp = (timestamp: string) => {
 
   // Strings will be of this format 
@@ -28,13 +36,11 @@ export default function MessageBubble({
   message,
   index,
   showThumbsUpDown = true,
-}: {
-  message: Message,
-  index?: number,
-  showThumbsUpDown?: boolean
-}) {
+  showTimestamp = true,
+  showExplanation = true
+}: MessageBubbleProps) {
 
-  const [showTimestamp, setShowTimestamp] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const [thumbStatus, setThumbStatus] = useState<"UP" | "DOWN" | undefined>(undefined);
 
   let messageText = message.text;
@@ -58,16 +64,16 @@ export default function MessageBubble({
         message.source === "BOT" ? "flex-col @lg:flex-row" : "ml-auto flex-col @lg:flex-row-reverse"
       )}>
         <div
-          onMouseEnter={() => setShowTimestamp(true)}
-          onMouseLeave={() => setShowTimestamp(false)}
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
           className={cx(
-            "p-4 rounded-2xl w-fit max-w-lg relative ml-auto",
-            message.source === "BOT" ? "text-left bg-gradient-to-tr bg-gray-100 " : "text-right bg-gradient-to-tr from-blue-600 to-blue-700 relative"
+            "p-4 rounded-2xl w-fit max-w-lg relative",
+            message.source === "BOT" ? "text-left bg-gradient-to-tr bg-gray-100 mr-auto" : "text-right bg-gradient-to-tr from-blue-600 to-blue-700 relative ml-auto"
           )}>
           {showThumbsUpDown &&
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: (showTimestamp && message.source === "BOT" && index !== 0) ? 1 : 0 }}
+              animate={{ opacity: (isHovering && message.source === "BOT" && index !== 0) ? 1 : 0 }}
               transition={{ duration: 0.2 }}
               className="absolute -top-4 -right-4 bg-white border border-gray-200 p-1 rounded-full flex flex-row gap-x-1">
               <button
@@ -98,16 +104,17 @@ export default function MessageBubble({
             </div>
           )}
         </div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: showTimestamp ? 1 : 0 }}
-          transition={{ duration: 0.2 }}
-          className={cx(
-            "text-gray-400 text-sm shrink-0 my-1 @lg:my-auto px-2 @lg:px-0",
-            message.source === "BOT" ? "text-left" : "ml-auto text-right"
-          )}>
-          {formatUglyServerTimestamp(message.timestamp)}
-        </motion.div>
+        {showTimestamp &&
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isHovering ? 1 : 0 }}
+            transition={{ duration: 0.2 }}
+            className={cx(
+              "text-gray-400 text-sm shrink-0 my-1 @lg:my-auto px-2 @lg:px-0",
+              message.source === "BOT" ? "text-left" : "ml-auto text-right"
+            )}>
+            {formatUglyServerTimestamp(message.timestamp)}
+          </motion.div>}
       </div>
     </motion.div>
   )

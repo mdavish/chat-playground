@@ -1,5 +1,5 @@
 import { useChatState } from "@yext/chat-headless-react";
-import { SearchResultsSchema } from "./schema/SearchResults";
+import { SearchResultsSchema } from "../schema/SearchResults";
 
 export default function SearchResults() {
   const searchResults = useChatState((state) => state.conversation.notes?.queryResult);

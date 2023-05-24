@@ -1,12 +1,12 @@
 import { useState, useMemo } from "react"
 import { ChatHeadlessProvider, type ChatConfig } from "@yext/chat-headless-react"
-import ChatPanel from "./components/ChatPanel"
-import SearchResults from "./SearchResults"
+import ChatPanel from "../components/chat-ui/ChatPanel"
+import SearchResults from "../components/SearchResults"
 import {
   TbLayoutSidebarRightCollapse,
   TbLayoutSidebarRightExpand
 } from "react-icons/tb"
-import { cn } from "./lib/utils"
+import { cn } from "../lib/utils"
 
 export default function SearchResultsPage() {
 

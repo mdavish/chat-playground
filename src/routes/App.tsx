@@ -5,20 +5,21 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./components/ui/select"
-import { Toggle } from "./components/ui/toggle";
+} from "../components/ui/select"
+import { Toggle } from "../components/ui/toggle";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./components/ui/tooltip";
+} from "../components/ui/tooltip";
 import { DevicePhoneMobileIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion"
 import { ChatHeadlessProvider } from "@yext/chat-headless-react";
-import ChatPanel, { type HeaderProps } from "./components/ChatPanel";
-import { cn } from "./lib/utils";
+import ChatPanel, { type HeaderProps } from "../components/chat-ui/ChatPanel";
+import { cn } from "../lib/utils";
 import { useSearchParams } from "react-router-dom";
+import MessageBubble from "../components/chat-ui/MessageBubble";
 
 interface BotConfig {
   label: string;
@@ -155,6 +156,18 @@ export default function App() {
         >
           <ChatPanel
             header={header}
+            voiceSearch={true}
+          // messageBubbleProps={{
+          //   showTimestamp: false,
+          // }}
+          // MessageBubbleComponent={({ message }) => {
+          //   return (
+          //     <MessageBubble
+          //       showTimestamp={false}
+          //       message={message}
+          //     />
+          //   )
+          // }}
           />
         </ChatHeadlessProvider>
       </motion.div>

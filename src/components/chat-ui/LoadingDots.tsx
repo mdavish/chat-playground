@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import { FaCircle } from "react-icons/fa"
-import { cn } from "../lib/utils"
+import { cn } from "../../lib/utils"
 
 export default function LoadingDots({ className }: { className?: string }) {
   return (

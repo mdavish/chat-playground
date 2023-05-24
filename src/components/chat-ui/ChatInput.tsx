@@ -1,26 +1,26 @@
 import { useState } from "react";
 import { useChatActions, useChatState } from "@yext/chat-headless-react";
 import { motion } from "framer-motion"
-import { FaArrowUp } from "react-icons/fa";
-import { cn } from "../lib/utils";
-import TextArea from "react-expanding-textarea"
+import { FaArrowUp, FaMicrophoneAlt } from "react-icons/fa";
+import { cn } from "../../lib/utils";
+import TextArea from "react-expanding-textarea";
 
-interface ChatInputProps {
-  placeholder?: string;
-  className?: string;
-}
 
 export default function ChatInput({
   className,
-  placeholder = "Type a message..."
-}: ChatInputProps) {
+  placeholder = "Type a message...",
+  voiceSearch = false,
+}: {
+  placeholder?: string;
+  className?: string;
+  // TODO: Implement voice search
+  voiceSearch?: boolean;
+}) {
 
   const chat = useChatActions();
   const loading = useChatState(state => state.conversation.isLoading)
 
-
   const [input, setInput] = useState("");
-
 
   const sendMessage = async () => {
     setInput("");
@@ -47,6 +47,18 @@ export default function ChatInput({
         className="border border-gray-300 p-4 w-full disabled:bg-gray-50 rounded-3xl resize-none pr-10"
         placeholder={placeholder}
       />
+      {
+        voiceSearch && (
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            initial={{ opacity: input.length > 0 ? 0 : 1 }}
+            animate={{ opacity: input.length > 0 ? 0 : 1 }}
+            disabled={loading}
+            className="rounded-full mx-auto text-gray-400 bg-white hover:bg-gray-100 p-1.5 disabled:bg-gray-100 text-xl absolute right-7 bottom-3 my-auto p">
+            <FaMicrophoneAlt className="text-xl" />
+          </motion.button>
+        )
+      }
       <motion.button
         whileTap={{ scale: 0.9 }}
         initial={{ opacity: input.length > 0 ? 1 : 0 }}

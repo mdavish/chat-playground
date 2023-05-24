@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import { useChatState, useChatActions } from "@yext/chat-headless-react"
-import MessageBubble from "./MessageBubble"
+import MessageBubble, { type MessageBubbleProps } from "./MessageBubble"
 import ChatInput from "./ChatInput";
 import LoadingDots from "./LoadingDots";
-import { cn } from "../lib/utils";
+import { cn } from "../../lib/utils";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
 
@@ -16,9 +16,16 @@ export interface HeaderProps {
 export default function ChatPanel({
   className,
   header,
+  voiceSearch = false,
+  messageBubbleProps,
+  MessageBubbleComponent = MessageBubble,
 }: {
   className?: string,
   header?: HeaderProps,
+  voiceSearch?: boolean,
+  // TODO: Decide which of these we actually want
+  messageBubbleProps?: Omit<MessageBubbleProps, "message">,
+  MessageBubbleComponent?: typeof MessageBubble,
 }) {
 
   const chat = useChatActions();
@@ -66,7 +73,8 @@ export default function ChatPanel({
         <div className="mx-auto max-w-5xl mt-auto w-full flex flex-col gap-y-1 @lg:gap-y-6 py-2 px-4 ">
           {
             messages.map((message, index) => (
-              <MessageBubble
+              <MessageBubbleComponent
+                {...messageBubbleProps}
                 key={index}
                 index={index}
                 message={message}
@@ -82,7 +90,7 @@ export default function ChatPanel({
         </div>
       </div>
       <div className="flex flex-row absolute w-full bottom-0 bg-white/25 backdrop-blur-lg border-t border-white py-4">
-        <ChatInput />
+        <ChatInput voiceSearch={voiceSearch} />
       </div>
     </div>
   )
