@@ -21,10 +21,17 @@ export default function ChatInput({
   const loading = useChatState(state => state.conversation.isLoading)
 
   const [input, setInput] = useState("");
+  const [canSendMessage, setCanSendMessage] = useState(false);
 
   const sendMessage = async () => {
     setInput("");
-    await chat.getNextMessage(input);
+    setCanSendMessage(true);
+    try {
+      await chat.streamNextMessage(input);
+    } catch (err) {
+      setCanSendMessage(false);
+    }
+    setCanSendMessage(false);
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -40,11 +47,11 @@ export default function ChatInput({
     )}>
       <TextArea
         autoFocus
-        disabled={loading}
+        disabled={canSendMessage}
         onKeyDown={handleKeyDown}
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        className="border border-gray-300 p-4 w-full disabled:bg-gray-50 rounded-3xl resize-none pr-10"
+        className="border border-slate-300 p-4 w-full disabled:bg-slate-50 rounded-3xl resize-none pr-10"
         placeholder={placeholder}
       />
       {
@@ -54,7 +61,7 @@ export default function ChatInput({
             initial={{ opacity: input.length > 0 ? 0 : 1 }}
             animate={{ opacity: input.length > 0 ? 0 : 1 }}
             disabled={loading}
-            className="rounded-full mx-auto text-gray-400 bg-white hover:bg-gray-100 p-1.5 disabled:bg-gray-100 text-xl absolute right-7 bottom-3 my-auto p">
+            className="rounded-full mx-auto text-slate-400 bg-white hover:bg-slate-100 p-1.5 disabled:bg-slate-100 text-xl absolute right-7 bottom-3 my-auto p">
             <FaMicrophoneAlt className="text-xl" />
           </motion.button>
         )
@@ -65,7 +72,7 @@ export default function ChatInput({
         animate={{ opacity: input.length > 0 ? 1 : 0 }}
         disabled={loading}
         onClick={sendMessage}
-        className="rounded-full mx-auto text-white bg-blue-600 p-1.5 hover:bg-blue-800 disabled:bg-gray-100 text-xl absolute right-7 bottom-4 my-auto p">
+        className="rounded-full mx-auto text-white bg-blue-600 p-1.5 hover:bg-blue-800 disabled:bg-slate-100 text-xl absolute right-7 bottom-4 my-auto">
         <FaArrowUp className="text-base" />
       </motion.button>
     </div>

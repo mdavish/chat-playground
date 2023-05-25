@@ -9,7 +9,7 @@ export default function LoadingDots({ className }: { className?: string }) {
       animate={{ opacity: 1 }}
       transition={{ delay: 0.7, duration: 0.5 }}
       className={cn(
-        "w-fit flex gap-1 rounded-md p-2 text-[8px] text-gray-500",
+        "w-fit flex gap-1 rounded-md p-2 text-[8px] text-slate-500",
         className
       )}>
       <FaCircle className="animate-bounce" style={{ animationDelay: "0ms" }} />

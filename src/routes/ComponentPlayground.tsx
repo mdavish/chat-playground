@@ -15,7 +15,7 @@ export default function ComponentPlayground() {
 
   return (
     <ChatHeadlessProvider config={chatConfig}>
-      <div className="h-screen w-screen divide-dashed divide-gray-400 gap-x-4 divide-y flex ">
+      <div className="h-screen w-screen divide-dashed divide-slate-400 gap-x-4 divide-y flex ">
         <div className="grid grid-cols-8 h-4/6 my-auto mx-16 gap-x-4">
           <div className="mb-auto h-full bg-blue-100 col-span-2 flex flex-col-reverse gap-y-4">
             <MessageBubble index={0} message={{ source: "USER", text: "Hello I'm a bot message!", timestamp: "2023-05-18T19:33:34.553Z" }} />

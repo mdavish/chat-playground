@@ -29,7 +29,7 @@ export default function SearchResultsPage() {
           <ChatPanel />
           <div className="absolute top-0 right-0 flex flex-row gap-x-2 p-2">
             <button
-              className="rounded-full bg-gray-50 p-2"
+              className="rounded-full bg-slate-50 p-2"
               onClick={() => setIsChatPanelOpen(!isChatPanelOpen)}
             >
               {
@@ -43,7 +43,7 @@ export default function SearchResultsPage() {
           </div>
         </div>
         <div className={cn(
-          "shrink-0 overflow-auto border-l bg-gray-50 transition-width duration-300 ease-in-out whitespace-nowrap",
+          "shrink-0 overflow-auto border-l bg-slate-50 transition-width duration-300 ease-in-out whitespace-nowrap",
           isChatPanelOpen ? "w-96" : "w-0"
         )}>
           <SearchResults />

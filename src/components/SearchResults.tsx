@@ -14,7 +14,7 @@ export default function SearchResults() {
       {
         parsedResults.success ? (
           <div className="flex flex-col">
-            <h2 className="text-gray-700 font-semibold mb-4">
+            <h2 className="text-slate-700 font-semibold mb-4">
               Related Search Results
             </h2>
             <div className="flex flex-col gap-y-4 ">
@@ -33,7 +33,7 @@ export default function SearchResults() {
                       <div className="flex flex-col">
                         <a
                           target="_blank"
-                          href={`https://commerce.skiware.us/${result.data.slug}`} className="text-gray-800 hover:underline">
+                          href={`https://commerce.skiware.us/${result.data.slug}`} className="text-slate-800 hover:underline">
                           {result.data.name}
                         </a>
                         {abilityLevel && (
@@ -43,7 +43,7 @@ export default function SearchResults() {
                                 src={abilityLevel.c_icon.image.url}
                               />
                             }
-                            <p className="ml-1 text-sm text-gray-500 text-left">
+                            <p className="ml-1 text-sm text-slate-500 text-left">
                               {abilityLevel.name}
                             </p>
                           </div>
@@ -53,7 +53,7 @@ export default function SearchResults() {
                             {terrain.c_icon && (
                               <img src={terrain.c_icon.image.url} />
                             )}
-                            <p className="ml-1 text-sm text-gray-500 text-left">
+                            <p className="ml-1 text-sm text-slate-500 text-left">
                               {terrain.name}
                             </p>
                           </div>

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { ChatHeadlessProvider, type ChatConfig } from "@yext/chat-headless-react";
-import ChatPopUp from "../components/ChatPopUp";
+import ChatPopUp from "../components/chat-ui/ChatPopUp";
 
 export default function PopupPage() {
 
@@ -12,7 +12,7 @@ export default function PopupPage() {
   }, [])
 
   return (
-    <div>
+    <div className="w-screen h-screen flex">
       <ChatHeadlessProvider config={chatConfig}>
         <ChatPopUp />
       </ChatHeadlessProvider>
