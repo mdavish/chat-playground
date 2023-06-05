@@ -48,6 +48,12 @@ const configOptions: BotConfig[] = [
     label: "Davish Playground",
   },
   {
+    apiKey: "1c06cff8f4e50d80fefd989fe50dedc5",
+    botId: "my-new-bot",
+    env: "PROD",
+    label: "Baigel's Bot",
+  },
+  {
     apiKey: "5db47bd2b4c1f5776606691c7da348b2",
     botId: "hitchhikers-chat",
     env: "PROD",
@@ -156,6 +162,7 @@ export default function App() {
           config={{
             apiKey: selectedConfig.apiKey,
             botId: selectedConfig.botId,
+            saveToSessionStorage: false,
           }}
         >
           <ChatPanel HeaderComponent={HeaderComponent} />

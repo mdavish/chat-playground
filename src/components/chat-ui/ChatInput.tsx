@@ -10,11 +10,13 @@ export default function ChatInput({
   className,
   placeholder = "Type a message...",
   voiceSearch = false,
+  autofocus = false
 }: {
   placeholder?: string;
   className?: string;
   // TODO: Implement voice search
   voiceSearch?: boolean;
+  autofocus?: boolean;
 }) {
 
   const chat = useChatActions();
@@ -46,7 +48,7 @@ export default function ChatInput({
       className
     )}>
       <TextArea
-        autoFocus
+        autoFocus={autofocus}
         disabled={canSendMessage}
         onKeyDown={handleKeyDown}
         value={input}

@@ -10,10 +10,14 @@ export default function ChatPanel({
   className,
   HeaderComponent,
   MessageBubbleComponent = MessageBubble,
+  autoScroll = true,
+  autofocus = true,
 }: {
   className?: string,
   MessageBubbleComponent?: typeof MessageBubble,
   HeaderComponent?: JSX.Element,
+  autoScroll?: boolean,
+  autofocus?: boolean,
 }) {
 
   const chat = useChatActions();
@@ -30,10 +34,10 @@ export default function ChatPanel({
 
   // Scroll to the bottom of the chat when the messages change
   useEffect(() => {
-    if (bottomDivRef.current) {
-      bottomDivRef.current.scrollIntoView({ behavior: "smooth" });
+    if (bottomDivRef.current && autoScroll) {
+      bottomDivRef.current.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
     }
-  }, [messages])
+  }, [messages, autoScroll])
 
   return (
     <div className={cn("relative w-full h-full @container", className)}>
@@ -56,11 +60,11 @@ export default function ChatPanel({
               <LoadingDots />
             )
           }
-          <div ref={bottomDivRef} />
+          {/* <div ref={bottomDivRef} /> */}
         </div>
       </div>
       <div className="flex flex-row absolute w-full bottom-0 bg-white/25 backdrop-blur-lg border-t border-white py-4">
-        <ChatInput />
+        <ChatInput autofocus={autofocus} />
       </div>
     </div>
   )

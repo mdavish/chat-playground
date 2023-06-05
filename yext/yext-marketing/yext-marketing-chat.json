@@ -1,0 +1,111 @@
+{
+  "$id": "yext-marketing-bot",
+  "$schema": "https://schema.yext.com/config/chat/chat-bot/v1",
+  "name": "Yext Marketing Bot",
+  "identityContext": "",
+  "initialMessage": "Hi! This is Yext Marketing Bot. How can I help you?",
+  "goals": {
+    "ANSWER_QUESTION": {
+      "goal": "Answer a question about Yext.",
+      "instructions": [
+        {
+          "search": {
+            "experienceKey": "yextanswersconfig",
+            "includedFields": [],
+            "excludedFields": [],
+            "includedVerticals": [],
+            "excludedVerticals": [],
+            "instruction": "Use Yext Search to find the answer to the user's question",
+            "locale": "en"
+          }
+        },
+        {
+          "reply": {
+            "instruction": "Based on the data you found, reply with the answer from the Knowledge Graph, with as much detail as is available.",
+            "mode": "DIRECT_ANSWER",
+            "citationExample": ""
+          }
+        }
+      ],
+      "examples": [
+        "What is Yext?",
+        "What does Yext do?",
+        "What products does Yext offer?"
+      ]
+    },
+    "GET-DEMO": {
+      "goal": "Get the user in touch with a Yext Salesperson so they can get a demo of the platform.",
+      "examples": [
+        "Hi I'd like to get a demo",
+        "Hi I'd like a demo of Yext",
+        "I'd like to talk to a Yext Salesperson"
+      ],
+      "instructions": [
+        {
+          "collect": {
+            "instruction": "Collect the user's email address so we can get in touch with them.",
+            "fields": [
+              {
+                "id": "email",
+                "description": "The user's email address. This is important",
+                "required": true,
+                "fieldType": "STRING"
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "condition": "If the user provided a personal email address (i.e. it ends with \"gmail.com\" or \"yahoo.com\")...",
+            "instructions": [
+              {
+                "collect": {
+                  "instruction": "Ask the user what company they work for as well.",
+                  "fields": [
+                    {
+                      "id": "company",
+                      "description": "The company name.",
+                      "required": true,
+                      "fieldType": "STRING"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "function": {
+            "functionName": "marketoHandler",
+            "pluginId": "chatPlugins"
+          }
+        },
+        {
+          "reply": {
+            "mode": "CONVERSATIONAL",
+            "instruction": "Reply to the user thanking them and letting them know we'll be in touch shortly."
+          }
+        }
+      ]
+    },
+    "CHIT_CHAT": {
+      "goal": "Engage in a casual conversation with the user. If the user's message does not align with any other goals, this goal should be used.",
+      "instructions": [
+        {
+          "reply": {
+            "instruction": "Reply casually to the user, engaging in cordial conversation.",
+            "mode": "CONVERSATIONAL",
+            "citationExample": ""
+          }
+        }
+      ],
+      "examples": [
+        "How are you doing?",
+        "What's going on?",
+        "What's your name?",
+        "Thank you!",
+        "Great"
+      ]
+    }
+  }
+}

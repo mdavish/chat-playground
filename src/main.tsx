@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './routes/App.tsx'
 import SearchResultsPage from './routes/SearchResultsPage.tsx'
 import ComponentPlayground from './routes/ComponentPlayground.tsx'
+import LandingPage from './routes/LandingPage.tsx'
 import PopupPage from './routes/Popup.tsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -23,7 +24,11 @@ const router = createBrowserRouter([
   {
     path: "/popup",
     element: <PopupPage />,
-  }
+  },
+  {
+    path: "/landing-page",
+    element: <LandingPage />,
+  },
 ])
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
