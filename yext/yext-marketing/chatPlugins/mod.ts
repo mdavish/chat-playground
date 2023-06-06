@@ -1,7 +1,7 @@
 import { z } from "https://deno.land/x/zod/mod.ts";
 
 declare const MARKETO_CLIENT_ID: string;
-declare const MARKET_CLIENT_SECRET: string;
+declare const MARKETO_CLIENT_SECRET: string;
 
 const ChatFunctionPayloadSchema = z.object({
   messages: z.array(
@@ -106,19 +106,3 @@ export const marketoHandler: ChatFunction = async ({ notes }) => {
 
   return {};
 };
-
-// export default function main() {
-//   const sampleLead: LeadData = {
-//     email: "mdavish+12345@yext.com",
-//     firstName: "Maxwell",
-//     lastName: "Darvish",
-//     company: "Acme",
-//     title: "Product Manager",
-//   };
-
-//   return submitMarketoLead({
-//     clientId: CLIENT_ID,
-//     clientSecret: CLIENT_SECRET,
-//     leadData: sampleLead,
-//   });
-// }

@@ -36,7 +36,7 @@ const configOptions: BotConfig[] = [
     label: "Ski Warehouse",
   },
   {
-    apiKey: "5db47bd2b4c1f5776606691c7da348b2",
+    apiKey: "3f787a8ed5b5092b61932982f6837316",
     botId: "yext-marketing-bot",
     env: "PROD",
     label: "Yext Marketing",

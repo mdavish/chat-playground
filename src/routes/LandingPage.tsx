@@ -4,7 +4,10 @@ import { ArrowLongRightIcon } from '@heroicons/react/20/solid'
 import { ChatHeadlessProvider } from '@yext/chat-headless-react'
 import ChatHeader from '../components/chat-ui/ChatHeader'
 import ChatPanel from '../components/chat-ui/ChatPanel'
-
+import TextBlock from '../components/landing-page/TextBlock'
+import SplitStage from '../components/landing-page/SplitStage'
+import Button from '../components/landing-page/Button'
+import UseCases from '../components/landing-page/UseCases'
 
 export default function LandingPage() {
 
@@ -12,20 +15,18 @@ export default function LandingPage() {
     <>
       <ChatHeadlessProvider
         config={{
-          apiKey: "5db47bd2b4c1f5776606691c7da348b2",
+          apiKey: "3f787a8ed5b5092b61932982f6837316",
           botId: "yext-marketing-bot",
           saveToSessionStorage: false,
         }}>
         <Parallax
           className='h-screen w-screen font-poppins'
-          pages={3}
-          style={{
-            backgroundImage: "linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px)"
-          }}
+          pages={5}
         >
           <ParallaxLayer
             className='h-auto w-auto flex'
-            offset={0} speed={1.5}>
+            offset={0}
+            speed={1.5}>
             <div
               className='my-auto mx-auto flex flex-col gap-y-8'>
               <motion.h1
@@ -47,72 +48,102 @@ export default function LandingPage() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.25, duration: 1.5 }}
                 className='flex flex-row w-fit mx-auto gap-x-4'>
-                <button
-                  className='group bg-gradient-to-tr from-gray-600/50 to-gray-900/50 border border-white/25 hover:border-white/50 backdrop-blur-sm text-white mx-auto px-6 py-2 text-base rounded-xl shadow-2xl shadow-cyan-200/20 hover:shadow-cyan-100/40 transition-all duration-200 flex'>
+                <Button type='SECONDARY'>
                   Get a Demo
-                </button>
-                <button
-                  className='group bg-gradient-to-tr from-cyan-600/50 to-cyan-900/50 border border-white/25 hover:border-white/50 backdrop-blur-sm text-white mx-auto px-6 py-2 text-base rounded-xl shadow-2xl shadow-cyan-200/20 hover:shadow-cyan-100/40 transition-all duration-200 flex'>
+                </Button>
+                <Button
+                  type='PRIMARY'
+                  Icon={ArrowLongRightIcon}
+                >
                   Try it Out
-                  <ArrowLongRightIcon className='w-5 h-5 ml-2 my-auto group-hover:translate-x-2 transition-all' />
-                </button>
+                </Button>
               </motion.div>
             </div>
           </ParallaxLayer>
-          <ParallaxLayer
+          <SplitStage
             className='h-auto w-auto flex lg:flex-row flex-col'
             offset={1} speed={1.5}>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ scale: 1.1, opacity: 1, transition: { duration: 0.5 } }}
-              className='mr-auto w-1/2 my-auto flex flex-col gap-y-4 p-36'>
-              <h2 className='bg-gradient-to-br from-white to-gray-500 via-white bg-clip-text font-semibold text-3xl text-transparent'>
-                Try it for yourself.
-              </h2>
-              <p className='text-gray-200'>
-                Yext Chat uses large language models to answer questions about your business.
-                Try it out for yourself - ask us any question about Yext Chat and we'll do our best to answer it.
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ scale: 1.0, opacity: 1, transition: { duration: 0.5 } }}
-              className='mx-auto w-1/2 my-auto'>
+            <SplitStage.Left>
+              <TextBlock
+                title='Unlock the power of LLMs.'
+                subtitle="Yext Chat is unlike any bot you have ever used. It uses the power of large language models to answer questions. But don't take our word for it. Try it out. Ask it about itself."
+                cta={{
+                  text: 'Learn More About How It Works',
+                }}
+              />
+            </SplitStage.Left>
+            <SplitStage.Right>
               <div className='mx-auto my-auto bg-white/20 w-[50vh] h-[80vh] shadow-2xl shadow-white/20 rounded-3xl overflow-hidden' >
                 <ChatPanel
-                  HeaderComponent={<ChatHeader title='Try Me Out' showRefreshButton={true} />}
+                  HeaderComponent={
+                    <ChatHeader
+                      className='from-cyan-600 to-cyan-800'
+                      title='Try Me Out'
+                      showRefreshButton={true}
+                    />
+                  }
                   autofocus={false}
-                  autoScroll={true}
+                  autoScroll={false}
                 />
               </div>
-            </motion.div>
-          </ParallaxLayer>
-          <ParallaxLayer
+            </SplitStage.Right>
+          </SplitStage>
+          <SplitStage
             className='h-auto w-auto flex lg:flex-row flex-col-reverse'
             offset={2}
             speed={1.5}>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ scale: 1.0, opacity: 1, transition: { duration: 0.5 } }}
-              className='p-4 md:p-20 lg:p-0 mx-auto lg:w-1/2 my-auto lg:ml-32'>
-              <img src="/instructions.svg" className='w-[80vh]' />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ scale: 1.1, opacity: 1, transition: { duration: 0.5 } }}
-              className='text-center lg:text-left  mx-auto lg:mr-auto w-1/2 my-auto flex flex-col gap-y-4 lg:p-20'>
-              <h2 className='bg-gradient-to-br from-white to-gray-500 via-white bg-clip-text font-semibold text-3xl text-transparent'>
-                Program in natural language.
-              </h2>
-              <p className='text-gray-200'>
-                Yext Chat allows you to build complex workflows using natural language.
-                No more writing code, just write what you want to happen.
-              </p>
-            </motion.div>
-          </ParallaxLayer>
-        </Parallax >
+            <SplitStage.Left>
+              <img src="/instructions.svg" className='max-w-2xl mx-auto my-auto' />
+            </SplitStage.Left>
+            <SplitStage.Right>
+              <TextBlock
+                title='Use your words.'
+                subtitle='Yext Chat allows you to build complex workflows using natural language. No more writing code, just write what you want to happen. If you can explain it to a person, you can explain it to Yext Chat.'
+                cta={{
+                  text: "Try Writing Your First Bot"
+                }}
+              />
+            </SplitStage.Right>
+          </SplitStage>
+          <SplitStage
+            className=''
+            offset={3}
+            speed={1.5}
+          >
+            <SplitStage.Left>
+              <TextBlock
+                title='Built for developers.'
+                subtitle='Yext Chat is built for developers. It is easy to integrate into your existing website and can be customized to fit your needs.'
+                cta={{
+                  text: "Read the documentation."
+                }}
+              />
+            </SplitStage.Left>
+            <SplitStage.Right>
+              <div className='flex flex-col'>
+                <img className="max-w-2xl" src="/codeblock.svg" />
+                <img className="max-w-2xl" src="/codeblock2.svg" />
+              </div>
+            </SplitStage.Right>
+          </SplitStage>
+          <SplitStage
+            offset={4}
+          >
+            <SplitStage.Left>
+              <UseCases />
+            </SplitStage.Left>
+            <SplitStage.Right>
+              <TextBlock
+                title='For any use case.'
+                subtitle='Yext Chat can be used for any use case - whether supporting your customers, helping your employees find information they need, or helping your users find the right product.'
+                cta={{
+                  text: "View Customer Stories"
+                }}
+              />
+            </SplitStage.Right>
+          </SplitStage>
+        </Parallax>
       </ChatHeadlessProvider >
-
     </>
   )
 }

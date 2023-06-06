@@ -56,11 +56,12 @@ export default function ChatPanel({
             ))
           }
           {
-            loading && (
+            // TODO: Get rid of that
+            (loading && messages[messages.length - 1]?.source !== "BOT") && (
               <LoadingDots />
             )
           }
-          {/* <div ref={bottomDivRef} /> */}
+          <div ref={bottomDivRef} />
         </div>
       </div>
       <div className="flex flex-row absolute w-full bottom-0 bg-white/25 backdrop-blur-lg border-t border-white py-4">

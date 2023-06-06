@@ -12,7 +12,8 @@ export interface ChatHeaderProps {
 export default function ChatHeader({
   title,
   showRefreshButton,
-  className }: ChatHeaderProps) {
+  className
+}: ChatHeaderProps) {
   const chat = useChatActions();
   return (
     <div className={cn(
