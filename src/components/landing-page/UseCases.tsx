@@ -29,7 +29,7 @@ const useCases: UseCase[] = [
 
 export default function UseCases() {
   return (
-    <div className='py-6 h-full grid lg:grid-cols-2 lg:grid-rows-2 grid-cols-1 grid-rows-4 gap-y-8 gap-x-8'>
+    <div className='lg:my-auto lg:py-10 h-full grid lg:grid-cols-2 lg:grid-rows-2 grid-cols-1 grid-rows-4 gap-y-8 gap-x-8'>
       {
         // Map the same thing 4 times
         useCases.map(({ title, image, description }) => (

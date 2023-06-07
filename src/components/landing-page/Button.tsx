@@ -16,7 +16,7 @@ export default function Button({
       className={cn(
         'group bg-gradient-to-tr border  backdrop-blur-sm text-white px-6 py-2 text-base rounded-xl shadow-2xl shadow-cyan-200/20 hover:shadow-cyan-100/40 transition-all duration-200 flex border-white/25 hover:border-white/50',
         {
-          "from-cyan-600/50 to-cyan-800/50 ": type === "PRIMARY",
+          "from-cyan-800 to-cyan-950 ": type === "PRIMARY",
           "from-gray-600/50 to-gray-900/50": type === "SECONDARY",
         },
         className

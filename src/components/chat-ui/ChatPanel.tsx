@@ -5,6 +5,9 @@ import ChatInput from "./ChatInput";
 import LoadingDots from "./LoadingDots";
 import { cn } from "../../lib/utils";
 
+interface ChatPanelCssClasses {
+  inputContainer?: string,
+}
 
 export default function ChatPanel({
   className,
@@ -12,12 +15,16 @@ export default function ChatPanel({
   MessageBubbleComponent = MessageBubble,
   autoScroll = true,
   autofocus = true,
+  inputClassName,
+  customCssClasses = {},
 }: {
   className?: string,
   MessageBubbleComponent?: typeof MessageBubble,
   HeaderComponent?: JSX.Element,
   autoScroll?: boolean,
   autofocus?: boolean,
+  inputClassName?: string,
+  customCssClasses?: ChatPanelCssClasses,
 }) {
 
   const chat = useChatActions();
@@ -64,8 +71,11 @@ export default function ChatPanel({
           <div ref={bottomDivRef} />
         </div>
       </div>
-      <div className="flex flex-row absolute w-full bottom-0 bg-white/25 backdrop-blur-lg border-t border-white py-4">
-        <ChatInput autofocus={autofocus} />
+      <div className={cn(
+        "flex flex-row absolute w-full bottom-0 bg-white/25 backdrop-blur-lg border-t border-white py-4",
+        customCssClasses.inputContainer,
+      )}>
+        <ChatInput autofocus={autofocus} className={inputClassName} />
       </div>
     </div>
   )

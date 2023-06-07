@@ -8,6 +8,7 @@ import TextBlock from '../components/landing-page/TextBlock'
 import SplitStage from '../components/landing-page/SplitStage'
 import Button from '../components/landing-page/Button'
 import UseCases from '../components/landing-page/UseCases'
+import BlurryCircles from '../components/landing-page/BlurryCircles'
 
 export default function LandingPage() {
 
@@ -20,9 +21,10 @@ export default function LandingPage() {
           saveToSessionStorage: false,
         }}>
         <Parallax
-          className='h-screen w-screen font-poppins'
+          className='relative h-screen w-screen font-poppins'
           pages={5}
         >
+          <BlurryCircles />
           <ParallaxLayer
             className='h-auto w-auto flex'
             offset={0}
@@ -33,7 +35,7 @@ export default function LandingPage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5, duration: 1.5 }}
-                className='text-6xl lg:text-8xl font-normal mx-auto text-center bg-gradient-to-br from-white to-gray-500 via-white bg-clip-text text-transparent'>
+                className='text-6xl lg:text-8xl font-normal mx-auto text-center bg-gradient-to-br from-white to-gray-400 via-white bg-clip-text text-transparent'>
                 <span className='text-4xl lg:text-6xl'>Introducing</span> <br />Yext Chat
               </motion.h1>
               <motion.p
@@ -75,6 +77,9 @@ export default function LandingPage() {
             <SplitStage.Right>
               <div className='mx-auto my-auto bg-gradient-to-tr from-gray-900 to-black w-[50vh] h-[80vh] shadow-2xl shadow-white/20 rounded-3xl overflow-hidden border border-gray-800' >
                 <ChatPanel
+                  customCssClasses={{
+                    inputContainer: 'bg-gradient-to-tr from-gray-900 to-black border-t border-gray-800',
+                  }}
                   HeaderComponent={
                     <ChatHeader
                       className='bg-gradient from-black to-black py-6'
