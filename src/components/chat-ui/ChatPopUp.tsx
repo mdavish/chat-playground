@@ -4,8 +4,12 @@ import { IoCaretDownOutline, IoChatbubblesSharp } from 'react-icons/io5';
 import ChatPanel from './ChatPanel';
 import { cn } from '../../lib/utils';
 import ChatHeader from './ChatHeader';
+import ReactDOM from 'react-dom';
 
-export default function ChatPopUp({ headerTitle = "Chat" }: { headerTitle?: string }) {
+interface ChatPopUpProps {
+  headerTitle?: string;
+}
+export default function ChatPopUp({ headerTitle = "Chat" }: ChatPopUpProps) {
 
   const [showChat, setShowChat] = useState(false);
 
@@ -40,4 +44,8 @@ export default function ChatPopUp({ headerTitle = "Chat" }: { headerTitle?: stri
       </button>
     </div>
   )
+}
+
+ChatPopUp.mount = function (el: ReactDOM.Container, props: ChatPopUpProps) {
+  ReactDOM.render(<ChatPopUp {...props} />, el);
 }
