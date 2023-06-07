@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useChatState, useChatActions } from "@yext/chat-headless-react"
-import MessageBubble from "./MessageBubble"
+import MessageBubble, { type MessageBubbleProps } from "./MessageBubble"
 import ChatInput from "./ChatInput";
 import LoadingDots from "./LoadingDots";
 import { cn } from "../../lib/utils";
@@ -17,6 +17,8 @@ export default function ChatPanel({
   autofocus = true,
   inputClassName,
   customCssClasses = {},
+  suggestions = [],
+  messageBubbleProps,
 }: {
   className?: string,
   MessageBubbleComponent?: typeof MessageBubble,
@@ -25,6 +27,8 @@ export default function ChatPanel({
   autofocus?: boolean,
   inputClassName?: string,
   customCssClasses?: ChatPanelCssClasses,
+  suggestions?: string[],
+  messageBubbleProps?: Partial<MessageBubbleProps>,
 }) {
 
   const chat = useChatActions();
@@ -46,6 +50,8 @@ export default function ChatPanel({
     }
   }, [messages, autoScroll])
 
+  const userHasMessages = messages.some(message => message.source === "USER")
+
   return (
     <div className={cn("relative w-full h-full @container", className)}>
       {HeaderComponent && (
@@ -59,6 +65,7 @@ export default function ChatPanel({
                 key={index}
                 index={index}
                 message={message}
+                {...messageBubbleProps}
               />
             ))
           }
@@ -66,6 +73,23 @@ export default function ChatPanel({
             // TODO: Get rid of that
             (loading && messages[messages.length - 1]?.source !== "BOT") && (
               <LoadingDots />
+            )
+          }
+          {
+            !userHasMessages && suggestions.length > 0 && (
+              <div className="mx-auto max-w-5xl mt-auto w-full flex flex-col gap-y-2 @lg:gap-y-6 py-2 px-4 mb-3 ">
+                {
+                  suggestions.map((suggestion, index) => (
+                    <button
+                      key={index}
+                      className="bg-white/25 hover:bg-white/50 backdrop-blur-lg rounded-lg py-2 px-4 text-white text-sm font-semibold transition-colors duration-200"
+                      onClick={() => chat.getNextMessage(suggestion)}
+                    >
+                      {suggestion}
+                    </button>
+                  ))
+                }
+              </div>
             )
           }
           <div ref={bottomDivRef} />

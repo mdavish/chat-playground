@@ -6,12 +6,22 @@ import { HandThumbUpIcon, HandThumbDownIcon } from "@heroicons/react/20/solid";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
+
+interface MessageBubbleCssClasses {
+  // TODO: Add more classes here
+  messageBubble?: string,
+}
+
+type MessageBubbleCssConstructor = MessageBubbleCssClasses | (({ type }: { type: "BOT" | "USER" }) => MessageBubbleCssClasses);
+
 export interface MessageBubbleProps {
   message: Message,
   index?: number,
   showThumbsUpDown?: boolean
   showTimestamp?: boolean,
+  customCssClasses?: MessageBubbleCssConstructor,
 }
+
 
 const formatUglyServerTimestamp = (timestamp: string) => {
 
@@ -34,10 +44,13 @@ export default function MessageBubble({
   index,
   showThumbsUpDown = true,
   showTimestamp = true,
+  customCssClasses = {},
 }: MessageBubbleProps) {
 
   const [isHovering, setIsHovering] = useState(false);
   const [thumbStatus, setThumbStatus] = useState<"UP" | "DOWN" | undefined>(undefined);
+
+  const cssClasses = typeof customCssClasses === "function" ? customCssClasses({ type: message.source }) : customCssClasses;
 
 
   return (
@@ -59,7 +72,8 @@ export default function MessageBubble({
           onMouseLeave={() => setIsHovering(false)}
           className={cx(
             "p-4 rounded-2xl w-fit max-w-lg relative",
-            message.source === "BOT" ? "text-left bg-gradient-to-tr from-slate-50 to-slate-100 mr-auto" : "text-right bg-gradient-to-tr from-blue-600 to-blue-700 relative ml-auto"
+            message.source === "BOT" ? "text-left bg-gradient-to-tr from-slate-50 to-slate-100 mr-auto" : "text-right bg-gradient-to-tr from-blue-600 to-blue-700 relative ml-auto",
+            cssClasses.messageBubble
           )}>
           {showThumbsUpDown &&
             <motion.div

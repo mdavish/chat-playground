@@ -30,7 +30,7 @@ export default function LandingPage() {
             speed={1.5}>
             <SplitStage.Left
             >
-              <div className='my-auto flex flex-col gap-y-4 md:gap-y-8 w-fit py-8 lg:p-16'>
+              <div className='my-auto flex flex-col gap-y-4 md:gap-y-8 w-fit p-2 xl:p-10'>
                 <motion.h1
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -57,7 +57,7 @@ export default function LandingPage() {
                     type='PRIMARY'
                     Icon={ArrowLongRightIcon}
                   >
-                    Try it Out
+                    Start Building
                   </Button>
                 </motion.div>
               </div>
@@ -72,6 +72,18 @@ export default function LandingPage() {
                 <ChatPanel
                   customCssClasses={{
                     inputContainer: 'bg-gradient-to-tr from-gray-900 to-black border-t border-gray-800',
+                  }}
+                  suggestions={[
+                    "How does Yext Chat work?",
+                    "What can I do with Yext Chat?",
+                    "How do I get started?"
+                  ]}
+                  messageBubbleProps={{
+                    customCssClasses({ type }) {
+                      return ({
+                        messageBubble: type === "USER" ? "bg-gradient to-tr from-cyan-600 to-cyan-700" : "",
+                      })
+                    },
                   }}
                   HeaderComponent={
                     <ChatHeader
