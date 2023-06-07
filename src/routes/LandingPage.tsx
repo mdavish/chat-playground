@@ -104,7 +104,6 @@ export default function LandingPage() {
             </SplitStage.Right>
           </SplitStage>
           <SplitStage
-            className=''
             offset={2}
             speed={1.5}
           >
@@ -118,7 +117,7 @@ export default function LandingPage() {
               />
             </SplitStage.Left>
             <SplitStage.Right>
-              <div className='flex flex-col'>
+              <div className='flex flex-col mx-auto my-auto'>
                 <img className="max-w-2xl" src="/codeblock.svg" />
                 <img className="max-w-2xl" src="/codeblock2.svg" />
               </div>
