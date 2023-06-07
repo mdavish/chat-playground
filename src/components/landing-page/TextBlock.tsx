@@ -28,7 +28,7 @@ export default function TextBlock({
       <h2 className='bg-gradient-to-br from-white to-gray-500 via-white bg-clip-text font-semibold text-3xl text-transparent'>
         {title}
       </h2>
-      <p className='text-gray-200 prose-lg'>
+      <p className='text-gray-200 prose-sm md:prose-lg'>
         {subtitle}
       </p>
       {

@@ -13,7 +13,7 @@ const sharedMotionProps: MotionProps = {
   whileInView: { scale: 1.0, opacity: 1, transition: { duration: 0.5 } }
 }
 
-const sharedSubComponentClass = "lg:text-left mx-auto lg:mr-auto h-full w-full lg:w-1/2 my-auto flex flex-col gap-y-4 max-w-3xl p-4"
+const sharedSubComponentClass = "lg:text-left mx-auto lg:mr-auto h-full w-full lg:w-1/2 my-auto flex flex-col gap-y-4 max-w-3xl md:p-4"
 
 export function SplitStageSub({
   className,

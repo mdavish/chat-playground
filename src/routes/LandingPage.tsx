@@ -1,4 +1,4 @@
-import { Parallax, ParallaxLayer } from '@react-spring/parallax'
+import { Parallax } from '@react-spring/parallax'
 import { motion } from 'framer-motion'
 import { ArrowLongRightIcon } from '@heroicons/react/20/solid'
 import { ChatHeadlessProvider } from '@yext/chat-headless-react'
@@ -22,60 +22,53 @@ export default function LandingPage() {
         }}>
         <Parallax
           className='relative h-screen w-screen font-poppins'
-          pages={5}
+          pages={4}
         >
           <BlurryCircles />
-          <ParallaxLayer
-            className='h-auto w-auto flex'
+          <SplitStage
             offset={0}
             speed={1.5}>
-            <div
-              className='my-auto mx-auto flex flex-col gap-y-8'>
-              <motion.h1
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 1.5 }}
-                className='text-6xl lg:text-8xl font-normal mx-auto text-center bg-gradient-to-br from-white to-gray-400 via-white bg-clip-text text-transparent'>
-                <span className='text-4xl lg:text-6xl'>Introducing</span> <br />Yext Chat
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1, duration: 1.5 }}
-                className='text-slate-300 text-lg p-4 lg:p-0 lg:text-xl max-w-lg text-center mx-auto'>
-                Yext Chat is a new way to build conversational agents using the power of large language models.
-              </motion.p>
+            <SplitStage.Left
+            >
+              <div className='my-auto flex flex-col gap-y-4 md:gap-y-8 w-fit py-8 lg:p-16'>
+                <motion.h1
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 1.5 }}
+                  className='text-center text-4xl md:text-6xl lg:text-8xl font-normal md:text-left bg-gradient-to-br from-white to-gray-400 via-white bg-clip-text text-transparent'>
+                  Build better conversations.
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1, duration: 1.5 }}
+                  className='text-slate-300 text-base md:text-lg p-4 lg:p-0 lg:text-xl max-w-lg text-center md:text-left '>
+                  Yext Chat is a new way to build conversational agents using the power of large language models.
+                </motion.p>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.25, duration: 1.5 }}
+                  className='flex flex-row w-fit mx-auto md:mx-0 gap-x-4'>
+                  <Button type='SECONDARY'>
+                    Get a Demo
+                  </Button>
+                  <Button
+                    type='PRIMARY'
+                    Icon={ArrowLongRightIcon}
+                  >
+                    Try it Out
+                  </Button>
+                </motion.div>
+              </div>
+            </SplitStage.Left>
+            <SplitStage.Right>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1.25, duration: 1.5 }}
-                className='flex flex-row w-fit mx-auto gap-x-4'>
-                <Button type='SECONDARY'>
-                  Get a Demo
-                </Button>
-                <Button
-                  type='PRIMARY'
-                  Icon={ArrowLongRightIcon}
-                >
-                  Try it Out
-                </Button>
-              </motion.div>
-            </div>
-          </ParallaxLayer>
-          <SplitStage
-            className='h-auto w-auto flex lg:flex-row flex-col'
-            offset={1} speed={1.5}>
-            <SplitStage.Left>
-              <TextBlock
-                title='Unlock the power of LLMs.'
-                subtitle="Yext Chat is unlike any bot you have ever used. It uses the power of large language models to answer questions. But don't take our word for it. Try it out. Ask it about itself."
-                cta={{
-                  text: 'Learn More About How It Works',
-                }}
-              />
-            </SplitStage.Left>
-            <SplitStage.Right>
-              <div className='mx-auto my-auto bg-gradient-to-tr from-gray-900 to-black w-[50vh] h-[80vh] shadow-2xl shadow-white/20 rounded-3xl overflow-hidden border border-gray-800' >
+                transition={{ delay: 2, duration: 1.5 }}
+                className='mx-auto my-auto bg-gradient-to-tr from-gray-900 to-black w-[50vh] h-[80vh] shadow-2xl shadow-white/20 rounded-3xl overflow-hidden border border-gray-800'
+              >
                 <ChatPanel
                   customCssClasses={{
                     inputContainer: 'bg-gradient-to-tr from-gray-900 to-black border-t border-gray-800',
@@ -90,12 +83,12 @@ export default function LandingPage() {
                   autofocus={false}
                   autoScroll={false}
                 />
-              </div>
+              </motion.div>
             </SplitStage.Right>
           </SplitStage>
           <SplitStage
             className='h-auto w-auto flex lg:flex-row flex-col-reverse'
-            offset={2}
+            offset={1}
             speed={1.5}>
             <SplitStage.Left>
               <img src="/instructions.svg" className='max-w-2xl mx-auto my-auto' />
@@ -112,7 +105,7 @@ export default function LandingPage() {
           </SplitStage>
           <SplitStage
             className=''
-            offset={3}
+            offset={2}
             speed={1.5}
           >
             <SplitStage.Left>
@@ -132,7 +125,7 @@ export default function LandingPage() {
             </SplitStage.Right>
           </SplitStage>
           <SplitStage
-            offset={4}
+            offset={3}
           >
             <SplitStage.Left>
               <UseCases />
