@@ -73,11 +73,11 @@ export default function LandingPage() {
               />
             </SplitStage.Left>
             <SplitStage.Right>
-              <div className='mx-auto my-auto bg-white/20 w-[50vh] h-[80vh] shadow-2xl shadow-white/20 rounded-3xl overflow-hidden' >
+              <div className='mx-auto my-auto bg-gradient-to-tr from-gray-900 to-black w-[50vh] h-[80vh] shadow-2xl shadow-white/20 rounded-3xl overflow-hidden border border-gray-800' >
                 <ChatPanel
                   HeaderComponent={
                     <ChatHeader
-                      className='from-cyan-600 to-cyan-800'
+                      className='bg-gradient from-black to-black py-6'
                       title='Try Me Out'
                       showRefreshButton={true}
                     />
