@@ -1,7 +1,7 @@
 import { z } from "https://deno.land/x/zod/mod.ts";
 
-declare const MARKETO_CLIENT_ID: string;
-declare const MARKETO_CLIENT_SECRET: string;
+export const MARKETO_CLIENT_SECRET = "MySiT1YbDio9kjcsys6ZQv8G9KETedVv";
+export const MARKETO_CLIENT_ID = "4992ad64-78e0-4fbf-b95c-7da63acc6ff2";
 
 const ChatFunctionPayloadSchema = z.object({
   messages: z.array(
@@ -38,6 +38,10 @@ const leadDataSchema = z.object({
   company: z.string().optional(),
   title: z.string().optional(),
   phone: z.string().optional(),
+  chatEngagementType: z
+    .enum(["Demo", "Contact Us", "Webinar", "Publication"])
+    .optional(),
+  Opt_in__c: z.boolean().optional(),
 });
 
 export type LeadData = z.infer<typeof leadDataSchema>;
@@ -59,7 +63,13 @@ export async function submitMarketoLead({
       "Content-Type": "application/json",
     },
   });
-  const { access_token } = await response.json();
+
+  console.log({ tokenEndpoint, MARKETO_CLIENT_ID, MARKETO_CLIENT_SECRET });
+  const resJson = await response.json();
+  console.log("Marketo Response");
+  console.log(resJson);
+
+  const access_token = resJson.access_token;
   // Throw an error if we didn't get a token
   if (!access_token) {
     throw new Error("No access token received from Marketo");
@@ -84,7 +94,39 @@ export async function submitMarketoLead({
 }
 
 export const marketoHandler: ChatFunction = async ({ notes }) => {
-  const parsedLeadData = leadDataSchema.safeParse(notes?.collectedData);
+  const parsedLeadData = leadDataSchema.safeParse({
+    ...notes?.collectedData,
+    chatEngagementType: "Demo",
+    Opt_in__c: false,
+  });
+
+  console.log({ parsedLeadData });
+
+  if (!parsedLeadData.success) {
+    throw new Error("Lead data was not valid");
+  }
+
+  const leadData = parsedLeadData.data;
+
+  const response = await submitMarketoLead({
+    clientId: MARKETO_CLIENT_ID,
+    clientSecret: MARKETO_CLIENT_SECRET,
+    leadData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Marketo lead submission failed");
+  }
+
+  return {};
+};
+
+export const optInHandler: ChatFunction = async ({ notes }) => {
+  const parsedLeadData = leadDataSchema.safeParse({
+    ...notes?.collectedData,
+    chatEngagementType: "Demo",
+    Opt_in__c: true,
+  });
 
   console.log({ parsedLeadData });
 

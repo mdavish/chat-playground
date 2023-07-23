@@ -53,11 +53,8 @@ export default function LandingPage() {
                   <Button type='SECONDARY'>
                     Get a Demo
                   </Button>
-                  <Button
-                    type='PRIMARY'
-                    Icon={ArrowLongRightIcon}
-                  >
-                    Start Building
+                  <Button type='PRIMARY'>
+                    Build Your Bot
                   </Button>
                 </motion.div>
               </div>

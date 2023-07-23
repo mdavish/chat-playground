@@ -5,6 +5,7 @@ import SearchResultsPage from './routes/SearchResultsPage.tsx'
 import ComponentPlayground from './routes/ComponentPlayground.tsx'
 import LandingPage from './routes/LandingPage.tsx'
 import PopupPage from './routes/Popup.tsx'
+import Google from './routes/Google.tsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/landing-page",
     element: <LandingPage />,
+  },
+  {
+    path: "/google",
+    element: <Google />,
   },
 ])
 

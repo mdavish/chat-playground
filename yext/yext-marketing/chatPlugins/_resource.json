@@ -1,8 +1,4 @@
 {
   "$id": "chatPlugins",
-  "$schema": "https://schema.yext.com/config/platform/plugin/v1",
-  "globals": {
-    "MARKETO_CLIENT_ID": "${{MARKETO_CLIENT_ID}}",
-    "MARKET_CLIENT_SECRET": "${{MARKET_CLIENT_SECRET}}"
-  }
+  "$schema": "https://schema.yext.com/config/platform/plugin/v1"
 }
