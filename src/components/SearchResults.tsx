@@ -5,6 +5,10 @@ export default function SearchResults() {
   const searchResults = useChatState((state) => state.conversation.notes?.queryResult);
   const parsedResults = SearchResultsSchema.safeParse(searchResults);
 
+  if (!(parsedResults.success && parsedResults.data.modules[0].verticalConfigId === "products")) {
+    throw new Error("SearchResults component only supports product search results");
+  }
+
   if (!searchResults) {
     return <></>
   }
@@ -68,9 +72,6 @@ export default function SearchResults() {
         ) : (
           <div>
             <p>There was an error parsing the search results.</p>
-            <p>
-              {parsedResults.error.message}
-            </p>
           </div>
         )
       }

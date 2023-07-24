@@ -3,15 +3,18 @@ import { motion } from "framer-motion";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown"
 import { FaMagic } from "react-icons/fa"
 import { BsChatFill } from "react-icons/bs"
+import { useChatModeContext } from "../../hooks";
+import Button from "./Button";
 
 export default function DirectAnswer() {
 
   const messages = useChatState(s => s.conversation.messages);
   const firstBotMessage = messages.find(m => m.source === "BOT");
   const isLoading = useChatState(s => s.conversation.isLoading);
+  const { setChatMode } = useChatModeContext();
 
   return (
-    <div className="w-2/5 shrink-0 h-fit text-base font-light rounded-md border border-blue-200 bg-gradient-to-br from-blue-50 to-blue-100 py-4 px-6 transition-all ">
+    <div className="w-full shrink-0 h-fit text-base font-light rounded-md py-4 px-6 transition-all">
       <p className="font-medium flex flex-row text-blue-900 mb-4">
         <FaMagic className="inline-block w-3 h-3 mr-2 my-auto" />
         {isLoading ? "Generating..." : "AI Answer"}
@@ -42,12 +45,17 @@ export default function DirectAnswer() {
           <ReactMarkdown className="text-left w-full prose-sm font-light text-blue-900">
             {firstBotMessage.text}
           </ReactMarkdown>
-          <button className="mt-3 bg-gradient-to-br from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white font-medium px-4 py-2 rounded-full border border-blue-800 flex flex-row text-sm w-fit">
+          <Button
+            onClick={() => {
+              console.log("Clicked into chat mode")
+              setChatMode(true);
+            }}
+          >
             <BsChatFill
               className="inline-block w-4 h-4 mr-2 my-auto mx-auto"
             />
             Ask a Follow Up
-          </button>
+          </Button>
         </motion.div>
       }
     </div>

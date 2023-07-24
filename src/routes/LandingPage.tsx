@@ -1,6 +1,5 @@
 import { Parallax } from '@react-spring/parallax'
 import { motion } from 'framer-motion'
-import { ArrowLongRightIcon } from '@heroicons/react/20/solid'
 import { ChatHeadlessProvider } from '@yext/chat-headless-react'
 import ChatHeader from '../components/chat-ui/ChatHeader'
 import ChatPanel from '../components/chat-ui/ChatPanel'

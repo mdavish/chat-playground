@@ -7,6 +7,7 @@ export default {
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{js,ts,jsx,tsx}",
+    "node_modules/@yext/chat-ui-react/lib/**/*.{js,jsx}",
   ],
   theme: {
     container: {

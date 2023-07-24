@@ -61,18 +61,10 @@ const LocationDataSchema = z.object({
   name: z.string(),
 });
 
-const ThumbnailSchema = z.object({
-  height: z.number(),
-  url: z.string().url(),
-  width: z.number(),
-});
-
-// Define the structure for each element in the photoGallery array.
 const PhotoGalleryElementSchema = z.object({
   image: ImageSchema,
 });
 
-// Define the root schema for photoGallery array.
 const PhotoGallerySchema = z.array(PhotoGalleryElementSchema);
 
 export const ProductDataSchema = z.object({

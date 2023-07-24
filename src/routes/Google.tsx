@@ -4,8 +4,12 @@ import { ChatHeadlessProvider, useChatState, useChatActions } from "@yext/chat-h
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid"
 import { cn } from "../lib/utils"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
-import SearchResults from "../components/SearchResults"
-import DirectAnswer from "src/components/google/DirectAnswer"
+import SearchResults from "../components/google/SearchResults"
+import DirectAnswer from "../components/google/DirectAnswer"
+import { ChatModeContextProvider } from "../components/google/ChatModeContext"
+import { useChatModeContext } from "../hooks"
+import { ChatPanel } from "@yext/chat-ui-react"
+import Button from "../components/google/Button"
 
 function Inner() {
 
@@ -43,9 +47,11 @@ function Inner() {
 
   const isLoading = useChatState(s => s.conversation.isLoading)
 
+  const { chatMode, setChatMode } = useChatModeContext();
+
   return (
     <AnimatePresence>
-      <div className="bg-white h-screen w-full flex flex-col">
+      <div className="bg-white h-screen w-full flex flex-col relative">
         <div
           className={cn(
             "mx-auto my-auto flex flex-col gap-y-6 w-full transition-all duration-300 ease-out shrink-0",
@@ -71,17 +77,40 @@ function Inner() {
         </div>
         <div
           className={cn(
-            "mx-auto w-full overflow-auto transition-all flex flex-row h-full px-10 pt-10"
+            "mx-auto w-full transition-all flex flex-row h-full px-10 overflow-hidden"
           )}>
           {
             hasSearched &&
-            <div className="mx-auto w-full flex flex-row gap-x-10 max-w-6xl">
+            <div className="h-full mx-auto w-full flex flex-col gap-y-10 gap-x-10 max-w-6xl overflow-auto">
               <DirectAnswer />
               <SearchResults />
             </div>
           }
         </div>
       </div>
+      {chatMode &&
+        <motion.div
+          key="chat-panel"
+          initial={{ y: '100vh' }}
+          animate={{ y: 0 }}
+          exit={{ y: '100vh' }}
+          transition={{ duration: 0.25 }}
+          className="flex w-full h-full absolute top-0 left-0  bg-white"
+        >
+          <div className="mx-auto w-full h-full max-w-6xl shrink-0 relative">
+            <Button
+              className="z-50 absolute top-0 left-0 mt-4 mr-4"
+              onClick={() => {
+                setChatMode(false);
+              }}
+            >
+              Back to Search
+            </Button>
+            <ChatPanel customCssClasses={{
+              container: "shadow-none my-0"
+            }} />
+          </div>
+        </motion.div>}
     </AnimatePresence>
   )
 }
@@ -94,7 +123,9 @@ export default function Google() {
         botId: "ski-warehouse-chat",
         saveToSessionStorage: false,
       }}>
-      <Inner />
+      <ChatModeContextProvider>
+        <Inner />
+      </ChatModeContextProvider>
     </ChatHeadlessProvider>
   )
 }
