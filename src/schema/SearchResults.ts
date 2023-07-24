@@ -24,6 +24,57 @@ export const SpecSchema = z.object({
   value: z.string(),
 });
 
+const TimeIntervalSchema = z.object({
+  start: z.string(),
+  end: z.string(),
+});
+
+const DaySchema = z.object({
+  isClosed: z.boolean(),
+  openIntervals: z.array(TimeIntervalSchema),
+});
+
+const HoursSchema = z.object({
+  monday: DaySchema,
+  tuesday: DaySchema,
+  wednesday: DaySchema,
+  thursday: DaySchema,
+  friday: DaySchema,
+  saturday: DaySchema,
+  sunday: DaySchema,
+});
+
+const AddressSchema = z.object({
+  city: z.string(),
+  countryCode: z.string(),
+  line1: z.string(),
+  postalCode: z.string(),
+  region: z.string(),
+});
+
+const LocationDataSchema = z.object({
+  address: AddressSchema,
+  c_deployedURL: z.string().url().optional(),
+  description: z.string().optional(),
+  hours: HoursSchema.optional(),
+  mainPhone: z.string().optional(),
+  name: z.string(),
+});
+
+const ThumbnailSchema = z.object({
+  height: z.number(),
+  url: z.string().url(),
+  width: z.number(),
+});
+
+// Define the structure for each element in the photoGallery array.
+const PhotoGalleryElementSchema = z.object({
+  image: ImageSchema,
+});
+
+// Define the root schema for photoGallery array.
+const PhotoGallerySchema = z.array(PhotoGalleryElementSchema);
+
 export const ProductDataSchema = z.object({
   $key: KeySchema,
   c_abilityLevel: z.array(IconSchema),
@@ -34,15 +85,31 @@ export const ProductDataSchema = z.object({
   name: z.string(),
   slug: z.string(),
   type: z.string(),
+  photoGallery: PhotoGallerySchema,
 });
 
-export const ResultSchema = z.object({
-  data: ProductDataSchema,
+export const ProductModuleSchema = z.object({
+  verticalConfigId: z.literal("products"),
+  results: z.array(
+    z.object({
+      data: ProductDataSchema,
+    })
+  ),
 });
 
-export const ModuleSchema = z.object({
-  results: z.array(ResultSchema),
+export const LocationModuleSchema = z.object({
+  verticalConfigId: z.literal("locations"),
+  results: z.array(
+    z.object({
+      data: LocationDataSchema,
+    })
+  ),
 });
+
+export const ModuleSchema = z.union([
+  ProductModuleSchema,
+  LocationModuleSchema,
+]);
 
 export const SearchResultsSchema = z.object({
   businessId: z.number(),
@@ -54,6 +121,5 @@ export type Icon = z.infer<typeof IconSchema>;
 export type Key = z.infer<typeof KeySchema>;
 export type Spec = z.infer<typeof SpecSchema>;
 export type ProductData = z.infer<typeof ProductDataSchema>;
-export type Result = z.infer<typeof ResultSchema>;
 export type Module = z.infer<typeof ModuleSchema>;
 export type SearchResults = z.infer<typeof SearchResultsSchema>;
