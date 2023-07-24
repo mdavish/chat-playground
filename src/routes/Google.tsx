@@ -10,6 +10,7 @@ import { ChatModeContextProvider } from "../components/google/ChatModeContext"
 import { useChatModeContext } from "../hooks"
 import { ChatPanel } from "@yext/chat-ui-react"
 import Button from "../components/google/Button"
+import { BsArrowLeft } from "react-icons/bs"
 
 function Inner() {
 
@@ -104,6 +105,9 @@ function Inner() {
                 setChatMode(false);
               }}
             >
+              <BsArrowLeft
+                className="inline-block w-4 h-4 mr-2 my-auto mx-auto"
+              />
               Back to Search
             </Button>
             <ChatPanel customCssClasses={{
@@ -111,7 +115,7 @@ function Inner() {
             }} />
           </div>
         </motion.div>}
-    </AnimatePresence>
+    </AnimatePresence >
   )
 }
 

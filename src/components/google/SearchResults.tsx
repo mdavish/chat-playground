@@ -1,6 +1,8 @@
 import { useChatState } from "@yext/chat-headless-react";
 import { SearchResultsSchema, ProductDataSchema } from "../../schema/SearchResults";
 import { motion } from "framer-motion";
+import { Stars } from "./Stars";
+import { CheckIcon } from "@heroicons/react/20/solid";
 
 export default function SearchResults() {
   const queryResult = useChatState(s => s.conversation.notes?.queryResult);
@@ -57,36 +59,49 @@ export default function SearchResults() {
                                 <div
                                   className="opacity-25 rounded-lg absolute w-full h-full bottom-0 right-0 bg-white bg-gradient-to-b from-white/0  to-black via-white/0" />
                               </div>
-                              <div className="flex flex-col gap-y-2">
-                                <div className="flex flex-col">
-                                  <a
-                                    target="_blank"
-                                    href={`https://commerce.skiware.us/${parsedResult.slug}`} className="text-slate-800 hover:underline">
-                                    {result.data.name}
-                                  </a>
-                                  {abilityLevel && (
-                                    <div className="flex items-center">
-                                      {abilityLevel.c_icon &&
-                                        <img
-                                          src={abilityLevel.c_icon.image.url}
-                                        />
-                                      }
-                                      <p className="ml-1 text-sm text-slate-500 text-left">
-                                        {abilityLevel.name}
-                                      </p>
-                                    </div>
-                                  )}
-                                  {terrain && (
-                                    <div className="flex items-center">
-                                      {terrain.c_icon && (
-                                        <img src={terrain.c_icon.image.url} />
-                                      )}
-                                      <p className="ml-1 text-sm text-slate-500 text-left">
-                                        {terrain.name}
-                                      </p>
-                                    </div>
-                                  )}
+                              <div className="flex flex-col gap-y-1">
+                                <a
+                                  target="_blank"
+                                  href={`https://commerce.skiware.us/${parsedResult.slug}`} className="text-slate-800 font-medium hover:underline">
+                                  {parsedResult.name}
+                                </a>
+                                <div className="flex flex-row divide-gray-400">
+                                  {
+                                    <span className="my-auto text-sm">${parsedResult.c_price} |   </span>
+                                  }
+                                  <Stars rating={5} />
                                 </div>
+                                <div className="mt-3 flex items-center">
+                                  <CheckIcon
+                                    className="h-5 w-5 flex-shrink-0 text-green-500"
+                                    aria-hidden="true"
+                                  />
+                                  <p className="ml-2 text-sm text-gray-500">
+                                    In stock and ready to ship
+                                  </p>
+                                </div>
+                                {abilityLevel && (
+                                  <div className="flex items-center">
+                                    {abilityLevel.c_icon &&
+                                      <img
+                                        src={abilityLevel.c_icon.image.url}
+                                      />
+                                    }
+                                    <p className="ml-1 text-sm text-slate-500 text-left">
+                                      {abilityLevel.name}
+                                    </p>
+                                  </div>
+                                )}
+                                {terrain && (
+                                  <div className="flex items-center">
+                                    {terrain.c_icon && (
+                                      <img src={terrain.c_icon.image.url} />
+                                    )}
+                                    <p className="ml-1 text-sm text-slate-500 text-left">
+                                      {terrain.name}
+                                    </p>
+                                  </div>
+                                )}
                               </div>
                             </motion.div>
                           )

@@ -14,7 +14,7 @@ export default function DirectAnswer() {
   const { setChatMode } = useChatModeContext();
 
   return (
-    <div className="w-full shrink-0 h-fit text-base font-light rounded-md py-4 px-6 transition-all">
+    <div className="w-full shrink-0 h-fit text-base rounded-md py-4 px-6 transition-all">
       <p className="font-medium flex flex-row text-blue-900 mb-4">
         <FaMagic className="inline-block w-3 h-3 mr-2 my-auto" />
         {isLoading ? "Generating..." : "AI Answer"}
@@ -42,7 +42,7 @@ export default function DirectAnswer() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="flex flex-col gap-y-4">
-          <ReactMarkdown className="text-left w-full prose-sm font-light text-blue-900">
+          <ReactMarkdown className="text-left w-full prose-sm text-blue-900">
             {firstBotMessage.text}
           </ReactMarkdown>
           <Button
