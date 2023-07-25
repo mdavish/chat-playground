@@ -5,6 +5,7 @@ import { FaMagic } from "react-icons/fa"
 import { BsChatFill } from "react-icons/bs"
 import { useChatModeContext } from "../../hooks";
 import Button from "./Button";
+import { cn } from "../../lib/utils";
 
 export default function DirectAnswer() {
 
@@ -23,14 +24,29 @@ export default function DirectAnswer() {
         isLoading &&
         <div className="flex flex-col gap-y-4 text-blue-900">
           {
-            Array.from({ length: 5 }).map((_, index) => (
+            Array.from({ length: 4 }).map((_, index) => (
               <motion.div
-                // Expand from 0 to 100% width, slightly slower for each subsequent bar
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 1, delay: index * 0.2 }}
-                key={index}
-                className="rounded-sm bg-gradient-to-br from-blue-200 to-blue-300 to animate-pulse h-4 w-full">
+                key={`bigdiv-${index}`}
+                className={cn("relative h-4 w-full overflow-hidden max-w-lg")}
+              >
+                {/* The light beam div */}
+                <motion.div
+                  key={`lildiv-${index}`}
+                  className="w-52 bg-gradient-to-r from-white to-blue-300 absolute top-0 bottom-0 left-0"
+                  variants={{
+                    start: { marginLeft: '-50%', opacity: 0 },
+                    end: { marginLeft: '100%', opacity: 1 }
+                  }}
+                  initial="start"
+                  animate="end"
+                  transition={{
+                    repeatDelay: 1,
+                    delay: index * 0.25,  // Delay each animation by 0.25s
+                    duration: 1,  // Animation duration
+                    repeat: Infinity,  // To loop the animation
+                    ease: "linear"  // To move at a constant speed
+                  }}
+                />
               </motion.div>
             ))
           }

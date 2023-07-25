@@ -82,7 +82,7 @@ function Inner() {
           )}>
           {
             hasSearched &&
-            <div className="h-full mx-auto w-full flex flex-col gap-y-10 gap-x-10 max-w-6xl overflow-auto">
+            <div className="h-full mx-auto w-full flex flex-col gap-y-5 gap-x-10 max-w-6xl overflow-auto">
               <DirectAnswer />
               <SearchResults />
             </div>
