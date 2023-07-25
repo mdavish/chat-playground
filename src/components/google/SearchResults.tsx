@@ -45,7 +45,7 @@ export default function SearchResults() {
                         module.results.map((result, rindex) => {
                           const parsedResult = ProductDataSchema.parse(result.data);
                           const abilityLevel = parsedResult.c_abilityLevel[0];
-                          const terrain = parsedResult.c_terrain[0];
+                          const terrain = parsedResult.c_terrain ? parsedResult.c_terrain[0] : null;
                           return (
                             <motion.div
                               initial={{ opacity: 0, y: -20 }}
@@ -97,7 +97,7 @@ export default function SearchResults() {
                                 )}
                                 {terrain && (
                                   <div className="flex items-center">
-                                    {terrain.c_icon && (
+                                    {(terrain && terrain.c_icon) && (
                                       <img src={terrain.c_icon.image.url} />
                                     )}
                                     <p className="ml-1 text-sm text-slate-500 text-left">
@@ -173,7 +173,7 @@ export default function SearchResults() {
                         mapStyle="mapbox://styles/mapbox/streets-v9"
                       >
                         {
-                          module.results.map((result, rindex) => {
+                          module.results.map((result) => {
                             return (
                               <Marker
                                 latitude={result.data.yextDisplayCoordinate.latitude}
