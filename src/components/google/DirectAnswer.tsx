@@ -15,7 +15,7 @@ export default function DirectAnswer() {
   const { setChatMode } = useChatModeContext();
 
   return (
-    <div className="w-full shrink-0 h-fit text-base rounded-md py-4 px-6 transition-all">
+    <div className="w-full shrink-0 h-fit text-base rounded-md py-4 transition-all">
       <p className="font-medium flex flex-row text-blue-900 mb-4">
         <FaMagic className="inline-block w-3 h-3 mr-2 my-auto" />
         {isLoading ? "Generating..." : "AI Answer"}
@@ -27,7 +27,7 @@ export default function DirectAnswer() {
             Array.from({ length: 4 }).map((_, index) => (
               <motion.div
                 key={`bigdiv-${index}`}
-                className={cn("relative h-4 w-full overflow-hidden max-w-xl")}
+                className={cn("relative h-4 w-full overflow-hidden max-w-2xl")}
               >
                 {/* The light beam div */}
                 <motion.div
@@ -58,7 +58,7 @@ export default function DirectAnswer() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="flex flex-col gap-y-4">
-          <ReactMarkdown className="text-left w-full prose-sm text-blue-900">
+          <ReactMarkdown className="text-left w-full prose-sm text-blue-900 list-disc">
             {firstBotMessage.text}
           </ReactMarkdown>
           <Button
