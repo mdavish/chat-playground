@@ -20,28 +20,28 @@ export const KeySchema = z.object({
 });
 
 export const SpecSchema = z.object({
-  name: z.string(),
-  value: z.string(),
+  name: z.string().optional(),
+  value: z.string().optional(),
 });
 
 const TimeIntervalSchema = z.object({
-  start: z.string(),
-  end: z.string(),
+  start: z.string().optional(),
+  end: z.string().optional(),
 });
 
 const DaySchema = z.object({
-  isClosed: z.boolean(),
-  openIntervals: z.array(TimeIntervalSchema),
+  isClosed: z.boolean().optional(),
+  openIntervals: z.array(TimeIntervalSchema).optional(),
 });
 
 const HoursSchema = z.object({
-  monday: DaySchema,
-  tuesday: DaySchema,
-  wednesday: DaySchema,
-  thursday: DaySchema,
-  friday: DaySchema,
-  saturday: DaySchema,
-  sunday: DaySchema,
+  monday: DaySchema.optional(),
+  tuesday: DaySchema.optional(),
+  wednesday: DaySchema.optional(),
+  thursday: DaySchema.optional(),
+  friday: DaySchema.optional(),
+  saturday: DaySchema.optional(),
+  sunday: DaySchema.optional(),
 });
 
 const AddressSchema = z.object({
@@ -59,6 +59,10 @@ const LocationDataSchema = z.object({
   hours: HoursSchema.optional(),
   mainPhone: z.string().optional(),
   name: z.string(),
+  yextDisplayCoordinate: z.object({
+    latitude: z.number(),
+    longitude: z.number(),
+  }),
 });
 
 const PhotoGalleryElementSchema = z.object({
@@ -71,8 +75,8 @@ export const ProductDataSchema = z.object({
   $key: KeySchema,
   c_abilityLevel: z.array(IconSchema),
   c_price: z.string(),
-  c_specs: z.array(SpecSchema),
-  c_terrain: z.array(IconSchema),
+  c_specs: z.array(SpecSchema).optional(),
+  c_terrain: z.array(IconSchema).optional(),
   c_turningRadius: z.string().optional(),
   name: z.string(),
   slug: z.string(),
@@ -113,5 +117,6 @@ export type Icon = z.infer<typeof IconSchema>;
 export type Key = z.infer<typeof KeySchema>;
 export type Spec = z.infer<typeof SpecSchema>;
 export type ProductData = z.infer<typeof ProductDataSchema>;
+export type LocationData = z.infer<typeof LocationDataSchema>;
 export type Module = z.infer<typeof ModuleSchema>;
 export type SearchResults = z.infer<typeof SearchResultsSchema>;

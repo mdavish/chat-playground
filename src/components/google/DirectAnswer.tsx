@@ -27,7 +27,7 @@ export default function DirectAnswer() {
             Array.from({ length: 4 }).map((_, index) => (
               <motion.div
                 key={`bigdiv-${index}`}
-                className={cn("relative h-4 w-full overflow-hidden max-w-lg")}
+                className={cn("relative h-4 w-full overflow-hidden max-w-xl")}
               >
                 {/* The light beam div */}
                 <motion.div

@@ -3,6 +3,9 @@ import { SearchResultsSchema, ProductDataSchema } from "../../schema/SearchResul
 import { motion } from "framer-motion";
 import { Stars } from "./Stars";
 import { CheckIcon } from "@heroicons/react/20/solid";
+import Map, { Marker } from 'react-map-gl';
+import "mapbox-gl/dist/mapbox-gl.css";
+import { MdDirections } from "react-icons/md";
 
 export default function SearchResults() {
   const queryResult = useChatState(s => s.conversation.notes?.queryResult);
@@ -23,7 +26,7 @@ export default function SearchResults() {
             initial={{ height: 0 }}
             animate={{ height: "100%" }}
             key={index}
-            className="bg-gray-50 border border-gray-200 rounded-md to animate-pulse p-4 w-full flex flex-col gap-y-4">
+            className="bg-gray-50 border border-gray-200 rounded-md to animate-pulse p-4 w-full flex flex-col gap-y-4 max-w-2xl">
             <div className="h-4 w-1/3 bg-gray-200 animate-pulse" />
             <div className="h-8 w-2/3 bg-gray-200 animate-pulse" />
             <div className="h-8 w-1/2 bg-gray-200 animate-pulse" />
@@ -34,12 +37,12 @@ export default function SearchResults() {
         (queryResult && parsedResults.success) && (
           <div>
             {parsedResults.data.modules.map((module, index) => {
-              return (
-                <div className="px-4 grid grid-cols-2 gap-x-4 gap-y-6">
-                  {
-                    module.results.map((result, rindex) => {
-                      switch (module.verticalConfigId) {
-                        case "products": {
+              switch (module.verticalConfigId) {
+                case "products": {
+                  return (
+                    <div className="px-4 grid grid-cols-2 gap-x-4 gap-y-6">
+                      {
+                        module.results.map((result, rindex) => {
                           const parsedResult = ProductDataSchema.parse(result.data);
                           const abilityLevel = parsedResult.c_abilityLevel[0];
                           const terrain = parsedResult.c_terrain[0];
@@ -105,12 +108,85 @@ export default function SearchResults() {
                               </div>
                             </motion.div>
                           )
-                        }
+                        })
                       }
-                    })
-                  }
-                </div>
-              )
+                    </div>
+                  )
+                }
+                case "locations": {
+                  return (
+                    <div className="flex flex-row gap-x-10">
+                      <div className="flex flex-col divide-y divide-gray-200 w-full">
+                        {
+                          module.results.map((result, rindex) => {
+                            return (
+                              <motion.div
+                                initial={{ opacity: 0, y: -20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                // Delay increases slightly for each result
+                                transition={{ duration: 0.5, delay: rindex * 0.1 }}
+                                className="flex flex-row">
+                                <div
+                                  key={`map-res-${rindex}`}
+                                  className="py-6 flex flex-col gap-y-2 w-full">
+                                  <a
+                                    target="_blank"
+                                    className="text-slate-800 font-medium hover:underline"
+                                    href={result.data.c_deployedURL ?? "/"}>
+                                    {result.data.name}
+                                  </a>
+                                  <div className="text-sm text-slate-800">
+                                    {result.data.address.line1}
+                                  </div>
+                                  <div className="text-sm text-slate-800">
+                                    {result.data.address.city}, {result.data.address.region} {result.data.address.postalCode}
+                                  </div>
+                                </div>
+                                <a
+                                  target="_blank"
+                                  href={`https://www.google.com/maps/dir/?api=1&destination=${result.data.yextDisplayCoordinate.latitude},${result.data.yextDisplayCoordinate.longitude}`}
+                                  className="my-auto mx-auto flex flex-col gap-y-2">
+                                  <div className="mx-auto rounded-full p-1 border border-blue-800/50">
+                                    <MdDirections className="h-7 w-7 text-blue-900" />
+                                  </div>
+                                  <div className="text-sm text-blue-900">Directions</div>
+                                </a>
+                              </motion.div>
+                            )
+                          })
+                        }
+                      </div>
+                      <Map
+                        mapLib={import('mapbox-gl')}
+                        mapboxAccessToken="pk.eyJ1IjoibWRhdmlzaCIsImEiOiJja3pkNzZ4cDYydmF6MnZtemZrNXJxYmtvIn0.9CYfaiw9PB90VlQEqt3dRQ"
+                        initialViewState={{
+                          longitude: -100,
+                          latitude: 40,
+                          zoom: 3.5
+                        }}
+                        style={{
+                          color: "blue",
+                          width: "45vw",
+                          height: "66vh",
+                          flexShrink: 0
+                        }}
+                        mapStyle="mapbox://styles/mapbox/streets-v9"
+                      >
+                        {
+                          module.results.map((result, rindex) => {
+                            return (
+                              <Marker
+                                latitude={result.data.yextDisplayCoordinate.latitude}
+                                longitude={result.data.yextDisplayCoordinate.longitude}
+                              />
+                            )
+                          })
+                        }
+                      </Map>
+                    </div>
+                  )
+                }
+              }
             })}
           </div>
         )

@@ -27,7 +27,9 @@ export default function SearchResults() {
                   const abilityLevel = result.data.c_abilityLevel[0];
                   const terrain = result.data.c_terrain[0];
                   return (
-                    <div className="flex flex-row">
+                    <div
+                      key={result.data.slug}
+                      className="flex flex-row">
                       {/* <div className="relative rounded-md ">
                         <img
                           src={result.data.}
