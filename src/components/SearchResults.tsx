@@ -25,17 +25,10 @@ export default function SearchResults() {
               {
                 parsedResults.data.modules[0].results.map(result => {
                   const abilityLevel = result.data.c_abilityLevel[0];
-                  const terrain = result.data.c_terrain[0];
                   return (
                     <div
                       key={result.data.slug}
                       className="flex flex-row">
-                      {/* <div className="relative rounded-md ">
-                        <img
-                          src={result.data.}
-                        />
-                        <div />
-                      </div> */}
                       <div className="flex flex-col">
                         <a
                           target="_blank"
@@ -51,16 +44,6 @@ export default function SearchResults() {
                             }
                             <p className="ml-1 text-sm text-slate-500 text-left">
                               {abilityLevel.name}
-                            </p>
-                          </div>
-                        )}
-                        {terrain && (
-                          <div className="flex items-center">
-                            {terrain.c_icon && (
-                              <img src={terrain.c_icon.image.url} />
-                            )}
-                            <p className="ml-1 text-sm text-slate-500 text-left">
-                              {terrain.name}
                             </p>
                           </div>
                         )}
